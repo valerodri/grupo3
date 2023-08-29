@@ -1,21 +1,21 @@
-
 let currentProduct = 0;
 //const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
-url = PRODUCT_INFO_URL + localStorage.getItem("prodID")+".json";
+url = PRODUCT_INFO_URL + localStorage.getItem("prodID") + ".json";
 
-document.addEventListener("DOMContentLoaded", function(e){
-    getJSONData(url).then(function(resultObj){
-        console.log(resultObj.status)
-        if (resultObj.status === "ok"){
-            currentProduct = resultObj.data
-            showProductInfo()
+document.addEventListener("DOMContentLoaded", function (e) {
+    getJSONData(url).then(function (resultObj) {
+        console.log(resultObj.status);
+        if (resultObj.status === "ok") {
+            currentProduct = resultObj.data;
+            showProductInfo();
         }
-})});
+    });
+});
 
-function showProductInfo(){
+function showProductInfo() {
     let htmlContentToAppend = "";
     product_info = currentProduct;
-                htmlContentToAppend += `
+    htmlContentToAppend += `
                 <div class="list-group-item list-group-item-action cursor-active">
                     <div class="row">
                         <div class="col-3">
@@ -30,11 +30,20 @@ function showProductInfo(){
                         </div>
                     </div>
                 </div>
-                `           
-            document.getElementById("prod-info-container").innerHTML = htmlContentToAppend;
-    }
+                `;
+    document.getElementById("prod-info-container").innerHTML =
+        htmlContentToAppend;
+}
 
-    function setProdID(id) {
-        localStorage.setItem("prodID", id);
-        window.location = "product-info.html"
-    }
+function setProdID(id) {
+    localStorage.setItem("prodID", id);
+    window.location = "product-info.html";
+}
+
+function showAccount() {
+    let accountDisplay = document.getElementById("accountDisplay");
+    let nameAccount = localStorage.getItem("account");
+    accountDisplay.innerHTML = nameAccount;
+}
+
+document.addEventListener("DOMContentLoaded", showAccount());
