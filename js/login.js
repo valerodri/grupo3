@@ -15,7 +15,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     // Almacenar el token en localStorage
     localStorage.setItem("token", token);
 
-    //esto es nuevo
+    // Almacenar nombre de cuenta
     localStorage.setItem("account", floatingInput);
     
     // Redirigir al usuario a la página index.html
