@@ -11,28 +11,52 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     });
 });
-
+//prettier-ignore
 function showProductInfo() {
     let htmlContentToAppend = "";
     product_info = currentProduct;
     htmlContentToAppend += `
-                <div class="list-group-item list-group-item-action cursor-active">
-                    <div class="row">
-                        <div class="col-3">
-                            <img src="${product_info.images}" alt="${product_info.description}" class="img-thumbnail">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-8 order-md-1">
+                        <h4 class="mb-3">${product_info.name}</h4>
+                        <hr>
+                        <div>
+                            <label><strong>Precio</strong></label>
+                            <p>${product_info.cost}</p>
                         </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">${product_info.name}</h4>
-                                <small class="text-muted">${product_info.productCount} artículos</small>
+                        <div>
+                            <label><strong>Descripción</strong></label>
+                            <p>${product_info.description}</p>
+                        </div>
+                        <div>
+                            <label><strong>Categoría</strong></label>
+                            <p>${product_info.category}</p>
+                        </div>
+                        <div>
+                            <label><strong>Cantidad de vendidos</strong></label>
+                            <p>${product_info.soldCount}</p>
+                        </div>
+                            <div>
+                                <label><strong>Imágenes ilustrativas</strong></label>
+                                <div id="productsIMG" class="row">
+                                    <div class="col-md-3">
+                                        <img src="${product_info.images[0]}" alt="${product_info.description}" class="img-thumbnail">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <img src="${product_info.images[1]}" alt="${product_info.description}" class="img-thumbnail">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <img src="${product_info.images[2]}" alt="${product_info.description}" class="img-thumbnail">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <img src="${product_info.images[3]}" alt="${product_info.description}" class="img-thumbnail">
+                                    </div>
+                                </div>
                             </div>
-                            <p class="mb-1">${product_info.description}</p>
-                        </div>
                     </div>
                 </div>
                 `;
-    document.getElementById("prod-info-container").innerHTML =
-        htmlContentToAppend;
+    document.getElementById("prod-info-container").innerHTML = htmlContentToAppend;
 }
 
 function setProdID(id) {
