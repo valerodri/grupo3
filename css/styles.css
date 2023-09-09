@@ -199,5 +199,9 @@ a.custom-card:hover {
 }
 
 #productsIMG img:hover{
-  transform: scale(2.3);
+  transform: scale(1.2);
+}
+
+.checked {
+  color: orange;
 }

@@ -1,20 +1,42 @@
-let currentProduct = 0;
-//const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
-url = PRODUCT_INFO_URL + localStorage.getItem("prodID") + ".json";
+let currentProductImagesArray = [];
+let currentProductCommentsArray = [];
+let currentProduct;
 
-document.addEventListener("DOMContentLoaded", function (e) {
-    getJSONData(url).then(function (resultObj) {
-        console.log(resultObj.status);
+//const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
+//const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/products_comments/";
+
+url = PRODUCT_INFO_URL + localStorage.getItem("prodID") + ".json";
+urlcom = PRODUCT_INFO_COMMENTS_URL + localStorage.getItem("prodID") + ".json";
+
+document.addEventListener("DOMContentLoaded", async function (e) {
+    try {
+        const resultObj = await getJSONData(url);
         if (resultObj.status === "ok") {
             currentProduct = resultObj.data;
-            showProductInfo();
+            console.log(currentProduct);
+
         }
-    });
+
+        const resultObj2 = await getJSONData(urlcom);
+        if (resultObj2.status === "ok") {
+            currentProductCommentsArray = resultObj2.data;
+            console.log(currentProductCommentsArray);
+        }
+
+        showProductInfo();
+    } catch (error) {
+        console.error("An error occurred:", error);
+    }
 });
+
+
+
 //prettier-ignore
 function showProductInfo() {
+    console.log("entro al showproductinfo")
     let htmlContentToAppend = "";
     product_info = currentProduct;
+    console.log("pali"+product_info)
     htmlContentToAppend += `
                 <div class="row justify-content-md-center">
                     <div class="col-md-8 order-md-1">
@@ -22,7 +44,7 @@ function showProductInfo() {
                         <hr>
                         <div>
                             <label><strong>Precio</strong></label>
-                            <p>${product_info.cost}</p>
+                            <p>${product_info.currency} ${product_info.cost}</p>
                         </div>
                         <div>
                             <label><strong>Descripción</strong></label>
@@ -36,28 +58,84 @@ function showProductInfo() {
                             <label><strong>Cantidad de vendidos</strong></label>
                             <p>${product_info.soldCount}</p>
                         </div>
-                            <div>
-                                <label><strong>Imágenes ilustrativas</strong></label>
-                                <div id="productsIMG" class="row">
-                                    <div class="col-md-3">
-                                        <img src="${product_info.images[0]}" alt="${product_info.description}" class="img-thumbnail">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <img src="${product_info.images[1]}" alt="${product_info.description}" class="img-thumbnail">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <img src="${product_info.images[2]}" alt="${product_info.description}" class="img-thumbnail">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <img src="${product_info.images[3]}" alt="${product_info.description}" class="img-thumbnail">
-                                    </div>
-                                </div>
-                            </div>
+                        <div>
+                            <label><strong>Imágenes ilustrativas</strong></label>
+                        </div>
                     </div>
                 </div>
-                `;
+                <div>
+                    <div id="productsIMG" class="row">
+                    `;
+
+        htmlContentToAppend += showProductImages(product_info.images, product_info.description); 
+
+        htmlContentToAppend +=`
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                <div class="col-md-8 order-md-1">
+                    <br><label><strong>Comentarios</strong></label>
+                </div>
+                </div>
+                `
+        htmlContentToAppend += showProductComments(); 
+
     document.getElementById("prod-info-container").innerHTML = htmlContentToAppend;
+
 }
+
+function showProductImages(images, description) {
+    console.log("veo " + images)
+    let htmlContentToAppend = "";
+    for (let i = 0; i < images.length; i++) {
+        //console.log('vuelta: ' + i)
+        htmlContentToAppend += `
+            <div class="row justify-content-md-center">
+            <div class="col-md-8 order-md-1 img-thumbnail">
+                <div class="col-md-3">
+                    <img src="${product_info.images[i]}" alt="${description}">
+                </div>
+            </div>
+            </div>
+                `;
+    }
+    return htmlContentToAppend;
+}
+
+
+function showProductComments() {
+    let htmlContentToAppend = "";
+    for (let i = 0; i < currentProductCommentsArray.length; i++) {
+        let product_com = currentProductCommentsArray[i];
+    
+        htmlContentToAppend += `
+            <div>
+            <div class="row justify-content-md-center">
+            <div class="col-md-8 order-md-1">
+            `;
+        htmlContentToAppend += showProductRating(product_com.score)
+        
+        htmlContentToAppend += `
+            <p>${product_com.description}</p>
+            <p>${product_com.user}</p>
+            <p>${product_com.dateTime}</p>
+            </div>
+            </div>
+            </div>
+        `;
+    }
+    return htmlContentToAppend;
+}
+
+function showProductRating(score){
+    let htmlContentToAppend = ""
+    for (let i=0; i<score; i++) 
+        htmlContentToAppend += `<span class="fa fa-star checked"></span>`
+    for (let i=0; i<5-score; i++) 
+        htmlContentToAppend += `<span class="fa fa-star"></span>`
+    return htmlContentToAppend;
+}
+
 
 function setProdID(id) {
     localStorage.setItem("prodID", id);
