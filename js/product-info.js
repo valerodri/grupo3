@@ -13,14 +13,12 @@ document.addEventListener("DOMContentLoaded", async function (e) {
         const resultObj = await getJSONData(url);
         if (resultObj.status === "ok") {
             currentProduct = resultObj.data;
-            console.log(currentProduct);
 
         }
 
         const resultObj2 = await getJSONData(urlcom);
         if (resultObj2.status === "ok") {
             currentProductCommentsArray = resultObj2.data;
-            console.log(currentProductCommentsArray);
         }
 
         showProductInfo();
@@ -33,10 +31,8 @@ document.addEventListener("DOMContentLoaded", async function (e) {
 
 //prettier-ignore
 function showProductInfo() {
-    console.log("entro al showproductinfo")
     let htmlContentToAppend = "";
     product_info = currentProduct;
-    console.log("pali"+product_info)
     htmlContentToAppend += `
                 <div class="row justify-content-md-center">
                     <div class="col-md-8 order-md-1">
@@ -85,10 +81,8 @@ function showProductInfo() {
 }
 
 function showProductImages(images, description) {
-    console.log("veo " + images)
     let htmlContentToAppend = "";
     for (let i = 0; i < images.length; i++) {
-        //console.log('vuelta: ' + i)
         htmlContentToAppend += `
             <div class="row justify-content-md-center">
             <div class="col-md-8 order-md-1 img-thumbnail">
