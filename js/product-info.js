@@ -70,7 +70,7 @@ function showProductInfo() {
                 </div>
                 <div class="row justify-content-md-center">
                 <div class="col-md-8 order-md-1">
-                    <br><label><strong>Comentarios</strong></label>
+                    <br><h5>Comentarios</h5>
                 </div>
                 </div>
                 `
@@ -103,16 +103,16 @@ function showProductComments() {
         let product_com = currentProductCommentsArray[i];
     
         htmlContentToAppend += `
-            <div>
+            <div >
             <div class="row justify-content-md-center">
-            <div class="col-md-8 order-md-1">
+            <div class="col-md-8 order-md-1 card mb-2"  >
             `;
-        htmlContentToAppend += showProductRating(product_com.score)
         
         htmlContentToAppend += `
+            <p><strong>${product_com.user}</strong> ${showProductRating(product_com.score)}</p>
             <p>${product_com.description}</p>
-            <p>${product_com.user}</p>
-            <p>${product_com.dateTime}</p>
+            <p class="text-muted">${product_com.dateTime}</p>
+            
             </div>
             </div>
             </div>
@@ -120,6 +120,34 @@ function showProductComments() {
     }
     return htmlContentToAppend;
 }
+    
+    
+   
+    const submitComment = document.getElementById("submit_comment");
+
+    submitComment.addEventListener('click', function showInputComment(){
+        {  
+            const description = document.getElementById("comment");
+            const user = localStorage.getItem("account");
+           // event.preventDefault();
+
+            const input_score = document.getElementById("score");
+            let input_description = description.value;
+            //parseInt convierte el número de string a integer para que la función stars() lo reconozca
+            let comment_score = parseInt(input_score.value);
+            
+            document.getElementById("prod-info-container").innerHTML += `
+            <div class="row justify-content-md-center">
+            <div class="col-md-8 order-md-1 card mb-2" id="comentarios" >
+            <p><strong>${user}</strong> ${showProductRating(comment_score)}</p>
+            <p>${input_description}</p>
+            <p class="text-muted">${fecha()}</p>
+            </div>
+            </div>
+    
+                `;
+        };
+    }); 
 
 function showProductRating(score){
     let htmlContentToAppend = ""
@@ -130,6 +158,14 @@ function showProductRating(score){
     return htmlContentToAppend;
 }
 
+function fecha() {
+    const hoy = new Date();
+    
+    const formato_hora = `${hoy.getHours().toString().padStart(2,0)}:${hoy.getMinutes().toString().padStart(2,0)}:${hoy.getSeconds().toString().padStart(2,0)}`;
+    const formato_fecha = `${hoy.getFullYear()}-${(hoy.getMonth() + 1).toString().padStart(2,0)}-${hoy.getDate().toString().padStart(2,0)}`;
+    
+    return `${formato_fecha + " " + formato_hora}`;
+};
 
 function setProdID(id) {
     localStorage.setItem("prodID", id);

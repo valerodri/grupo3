@@ -48,6 +48,31 @@
       <div class="row">
         <div class="list-group" id="prod-info-container">
         </div>
+        <div id="user_comment" class="row justify-content-md-center"> 
+          <div class="col-md-8 order-md-1">
+            <br>
+            <h5>Comentar</h5>
+            <form>
+                <label for="comment">Tu opinión:</label> 
+                <br>
+                <textarea id="comment" rows="3" cols="40"></textarea>
+                <br><br>
+                <label for="score">Tu puntuación:</label>
+                <br>
+                <select id="score">
+                <option value="-- seleccione --" selected disabled></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <br>
+              <br>
+              <input type="button" value="Enviar" id="submit_comment">
+            </form>
+          </div>
+        </div>
     </div>
   </main>
 
