@@ -121,7 +121,14 @@ function showProductComments() {
     return htmlContentToAppend;
 }
     
-    
+function showProductRating(score){
+    let htmlContentToAppend = ""
+    for (let i=0; i<score; i++) 
+        htmlContentToAppend += `<span class="fa fa-star checked"></span>`
+    for (let i=0; i<5-score; i++) 
+        htmlContentToAppend += `<span class="fa fa-star"></span>`
+    return htmlContentToAppend;
+} 
    
     const submitComment = document.getElementById("submit_comment");
 
@@ -150,15 +157,6 @@ function showProductComments() {
             } else { alert('Debe rellenar todos los campos.')}
         };
     }); 
-
-function showProductRating(score){
-    let htmlContentToAppend = ""
-    for (let i=0; i<score; i++) 
-        htmlContentToAppend += `<span class="fa fa-star checked"></span>`
-    for (let i=0; i<5-score; i++) 
-        htmlContentToAppend += `<span class="fa fa-star"></span>`
-    return htmlContentToAppend;
-}
 
 function fecha() {
     const hoy = new Date();
