@@ -129,13 +129,14 @@ function showProductComments() {
         {  
             const description = document.getElementById("comment");
             const user = localStorage.getItem("account");
-           // event.preventDefault();
+           const input_score = document.getElementById("score");
 
-            const input_score = document.getElementById("score");
+           
+
             let input_description = description.value;
-            //parseInt convierte el número de string a integer para que la función stars() lo reconozca
             let comment_score = parseInt(input_score.value);
-            
+
+            if (input_description != "" && comment_score!=0) {
             document.getElementById("prod-info-container").innerHTML += `
             <div class="row justify-content-md-center">
             <div class="col-md-8 order-md-1 card mb-2" id="comentarios" >
@@ -146,6 +147,7 @@ function showProductComments() {
             </div>
     
                 `;
+            } else { alert('Debe rellenar todos los campos.')}
         };
     }); 
 
