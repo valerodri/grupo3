@@ -79,20 +79,44 @@ function showProductInfo() {
     document.getElementById("prod-info-container").innerHTML = htmlContentToAppend;
 
 }
+//<div class="row justify-content-md-center">
+//<div class="col-md-8 order-md-1 img-thumbnail">
+  //  <div class="col-md-3">
 
 function showProductImages(images, description) {
     let htmlContentToAppend = "";
-    for (let i = 0; i < images.length; i++) {
+   htmlContentToAppend += `  
+   <div class="row justify-content-md-center">
+   <div div class="col-md-7 order-md-1 img-thumbnail">
+   <div id="imagenesCarrusel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+    <img src="${product_info.images[0]}" alt="${description}">
+    </div> `;
+
+    for (let i = 1; i < images.length; i++) {
         htmlContentToAppend += `
-            <div class="row justify-content-md-center">
-            <div class="col-md-8 order-md-1 img-thumbnail">
-                <div class="col-md-3">
+            <div class="carousel-item">
                     <img src="${product_info.images[i]}" alt="${description}">
                 </div>
-            </div>
-            </div>
                 `;
     }
+
+    htmlContentToAppend += `
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#imagenesCarrusel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#imagenesCarrusel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  </div>
+  </div>
+    `;
+
     return htmlContentToAppend;
 }
 
