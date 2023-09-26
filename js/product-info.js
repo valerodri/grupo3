@@ -1,5 +1,6 @@
 let currentProductImagesArray = [];
 let currentProductCommentsArray = [];
+let currentProductRelatedArray =[];
 let currentProduct;
 
 //const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
@@ -22,6 +23,8 @@ document.addEventListener("DOMContentLoaded", async function (e) {
         }
 
         showProductInfo();
+        showCommentSection();
+        showRelatedProducts();
     } catch (error) {
         console.error("An error occurred:", error);
     }
@@ -76,12 +79,12 @@ function showProductInfo() {
                 `
         htmlContentToAppend += showProductComments(); 
 
-    document.getElementById("prod-info-container").innerHTML = htmlContentToAppend;
+
+    document.getElementById("prod-info-container1").innerHTML = htmlContentToAppend;
 
 }
-//<div class="row justify-content-md-center">
-//<div class="col-md-8 order-md-1 img-thumbnail">
-  //  <div class="col-md-3">
+
+    
 
 function showProductImages(images, description) {
     let htmlContentToAppend = "";
@@ -127,9 +130,9 @@ function showProductComments() {
         let product_com = currentProductCommentsArray[i];
     
         htmlContentToAppend += `
-            <div >
+            <div>
             <div class="row justify-content-md-center">
-            <div class="col-md-8 order-md-1 card mb-2"  >
+            <div class="col-md-8 order-md-1 card mb-2">
             `;
         
         htmlContentToAppend += `
@@ -153,10 +156,43 @@ function showProductRating(score){
         htmlContentToAppend += `<span class="fa fa-star"></span>`
     return htmlContentToAppend;
 } 
-   
-    const submitComment = document.getElementById("submit_comment");
 
-    submitComment.addEventListener('click', function showInputComment(){
+
+  function showCommentSection() {
+    let htmlContentToAppend = "";
+    product_info = currentProduct;
+    htmlContentToAppend += `
+    <div id="user_comment" class="row justify-content-md-center"> 
+    <div class="col-md-8 order-md-1">
+      <br>
+      <h5>Comentar</h5>
+      <form>
+          <label for="comment">Tu opinión:</label> 
+          <br>
+          <textarea id="comment" rows="3" cols="40" required></textarea>
+          <br><br>
+          <label for="score">Tu puntuación:</label>
+          <br>
+          <select id="score" required>
+          <option value="0" selected disabled ></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <br>
+        <br>
+        <input type="button" value="Enviar" onclick="showInputComment()" id="submit_comment">
+      </form>
+    </div>
+  </div>
+  `;
+  document.getElementById("prod-info-container2").innerHTML = htmlContentToAppend;
+
+}; 
+
+  function showInputComment(){
         
             const description = document.getElementById("comment");
             const user = localStorage.getItem("account");
@@ -168,7 +204,7 @@ function showProductRating(score){
             let comment_score = parseInt(input_score.value);
 
             if (input_description != "" && comment_score!=0) {
-            document.getElementById("prod-info-container").innerHTML += `
+            document.getElementById("prod-info-container1").innerHTML += `
             <div class="row justify-content-md-center">
             <div class="col-md-8 order-md-1 card mb-2" id="comentarios" >
             <p><strong>${user}</strong> ${showProductRating(comment_score)}</p>
@@ -179,7 +215,7 @@ function showProductRating(score){
     
                 `;
             } else { alert('Debe rellenar todos los campos.')}
-    }); 
+    }; 
 
 function fecha() {
     const hoy = new Date();
@@ -189,6 +225,49 @@ function fecha() {
     
     return `${formato_fecha + " " + formato_hora}`;
 };
+
+
+function showRelatedProducts() {
+    let htmlContentToAppend = "";
+
+     htmlContentToAppend +=`
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+    <div class="col-md-8 order-md-1">
+        <br><h5>Productos relacionados</h5>
+    <div class="album">
+    <div class="row">
+    `;
+    for (let i = 0; i < currentProduct.relatedProducts.length; i++) {
+        let product_rel = currentProduct.relatedProducts[i];
+    
+        htmlContentToAppend += `
+            <div class="col-md-4">
+            <div class="card mb-4 custom-card cursor-active">
+            `;
+        
+        htmlContentToAppend += `
+            <img class="bd-placeholder-img card-img-top" src="${product_rel.image}"></img>
+             <div class= "card-body"> 
+            <p class="card-text">${product_rel.name}</p>
+            </div>
+            
+            </div>
+            </div>
+        `;
+    }
+// FALTA al cliquear que vaya al producto 
+    htmlContentToAppend +=` 
+    </div> 
+    </div>
+    </div>
+    </div>
+    `;
+
+    document.getElementById("prod-info-container3").innerHTML = htmlContentToAppend;
+}
+
 
 function setProdID(id) {
     localStorage.setItem("prodID", id);

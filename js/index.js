@@ -49,6 +49,17 @@ function showAccount() {
     accountDisplay.innerHTML = htmlContentToAppend;
 };
 
+/* DARK MODE
+dentro de showAccount:
+<li><a class="dropdown-item" onclick="cambiarModo()">Cambiar modo</a></li>
+
+fuera:
+function cambiarModo() {
+
+    document.getElementById("doc").getAttribute("data-bs-theme") == "light" ? "dark" : "light";
+console.log("it works")
+};
+*/
 
 function cerrarSesion (){
     localStorage.clear();
