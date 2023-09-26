@@ -232,18 +232,18 @@ function showRelatedProducts() {
 
      htmlContentToAppend +=`
         </div>
-    </div>
-    <div class="row justify-content-md-center">
-    <div class="col-md-8 order-md-1">
-        <br><h5>Productos relacionados</h5>
-    <div class="album">
-    <div class="row">
+        </div>
+        <div class="row justify-content-md-center">
+        <div class="col-md-8 order-md-1">
+            <br><h5>Productos relacionados</h5>
+        <div class="album">
+        <div class="row">
     `;
     for (let i = 0; i < currentProduct.relatedProducts.length; i++) {
         let product_rel = currentProduct.relatedProducts[i];
     
         htmlContentToAppend += `
-            <div class="col-md-4">
+            <div class="col-md-4"onclick="setProdID(${product_rel.id})">
             <div class="card mb-4 custom-card cursor-active">
             `;
         
@@ -257,13 +257,13 @@ function showRelatedProducts() {
             </div>
         `;
     }
-// FALTA al cliquear que vaya al producto 
-    htmlContentToAppend +=` 
-    </div> 
-    </div>
-    </div>
-    </div>
-    `;
+
+        htmlContentToAppend +=` 
+        </div> 
+        </div>
+        </div>
+        </div>
+        `;
 
     document.getElementById("prod-info-container3").innerHTML = htmlContentToAppend;
 }
