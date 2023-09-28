@@ -41,29 +41,31 @@ function showAccount() {
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
       <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+      <li><a class="dropdown-item" onclick="cambiarModo()">Cambiar modo</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item" id="cerrar_sesion" onclick="cerrarSesion()">Cerrar sesion</a></li>
     </ul>
   </div>`;
 
     accountDisplay.innerHTML = htmlContentToAppend;
-};
+}
 
 /* DARK MODE
 dentro de showAccount:
 <li><a class="dropdown-item" onclick="cambiarModo()">Cambiar modo</a></li>
 
 fuera:
-function cambiarModo() {
-
-    document.getElementById("doc").getAttribute("data-bs-theme") == "light" ? "dark" : "light";
-console.log("it works")
-};
 */
+function cambiarModo() {
+    var element = document.body;
+    element.dataset.bsTheme =
+        element.dataset.bsTheme == "light" ? "dark" : "light";
+    console.log("it works");
+}
 
-function cerrarSesion (){
+function cerrarSesion() {
     localStorage.clear();
     window.location.href = "login.html";
-    };
+}
 
 document.addEventListener("DOMContentLoaded", showAccount());
