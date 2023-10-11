@@ -205,3 +205,8 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.imgCart{
+  width: 60px;
+  height: 40px;
+}

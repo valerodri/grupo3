@@ -5,8 +5,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>eMercado - Todo lo que busques está aquí</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 </head>
@@ -36,12 +37,80 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+
+  <!--Contenido bajo nav-bar-->
+
+  <div class="text-center p-4">
+    <h2>Carrito de compras</h2>
+    <p class="lead">Artículos a comprar</p>
+  </div>
+  
+      <!--Contenido del carrito-->
+  <div id="cartContainer">
+    <!--Tabla de productos-->
+    <table class="table table-striped-columns">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Costo</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider" id="cart-container"></tbody>
+    </table>
+
+    <!--Contenedor tipo de envío-->
+    <div>
+      <p class="lead">Típo de envío</p>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        <label class="form-check-label" for="flexRadioDefault1">
+            Premium 2 a 5 días (15%)
+        </label>
       </div>
+      <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+          <label class="form-check-label" for="flexRadioDefault2">
+              Express 5 a 8 días (7%)
+          </label>
+      </div>
+      <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
+          <label class="form-check-label" for="flexRadioDefault3">
+              Standard 12 a 15 días (5%)
+          </label>
+      </div> <br>
     </div>
-  </main>
+    
+    <!--Contenedor dirección de envío-->
+    <div class="container text-center">
+      <p class="lead">Dirección de envío</p>
+        <div class="row row-cols-2">
+          <div class="col">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Calle</span>
+              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Número</span>
+              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Esquina</span>
+              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+        </div>
+    </div>
+    
+  </div>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -58,7 +127,8 @@
       <div></div>
     </div>
   </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
+  <!--<script src="js/bootstrap.bundle.min.js"></script>-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
 </body>
