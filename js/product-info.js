@@ -1,6 +1,9 @@
+const urlCarrito =
+    "https://japceibal.github.io/emercado-api/user_cart/25801.json";
+
 let currentProductImagesArray = [];
 let currentProductCommentsArray = [];
-let currentProductRelatedArray =[];
+let currentProductRelatedArray = [];
 let currentProduct;
 
 //const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
@@ -14,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async function (e) {
         const resultObj = await getJSONData(url);
         if (resultObj.status === "ok") {
             currentProduct = resultObj.data;
-
         }
 
         const resultObj2 = await getJSONData(urlcom);
@@ -30,7 +32,52 @@ document.addEventListener("DOMContentLoaded", async function (e) {
     }
 });
 
+//No me deja probar esto porque me dice que no tengo acceso permitido a la API (error 405)
+//Fetch API cannot load https://japceibal.github.io/emercado-api/user_cart/25801.json due to access control checks.
+function agregarCarrito() {
+    getJSONData(url).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            product = resultObj.data;
+        }
 
+        // Agregar el producto actual al carrito
+        //prettier-ignore
+        const item = {
+            "id": currentProduct.id,
+            "name": currentProduct.name,
+            "count": 1,
+            "unitCost": currentProduct.cost,
+            "currency": currentProduct.currency,
+            "image": currentProduct.images[0]
+        };
+
+        // Obtener el carrito actual del servidor
+        fetch(urlCarrito)
+            .then((response) => response.json())
+            .then((cartData) => {
+                cartData.articles.push(item);
+
+                // Realizar una solicitud PUT para actualizar el carrito en el servidor
+                fetch(urlCarrito, {
+                    method: "PUT",
+                    body: JSON.stringify(cartData),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((responseData) => {
+                        console.log("exito");
+                    })
+                    .catch((error) => {
+                        console.error("Error al actualizar el carrito:", error);
+                    });
+            })
+            .catch((error) => {
+                console.error("Error al obtener el carrito actual:", error);
+            });
+    });
+}
 
 //prettier-ignore
 function showProductInfo() {
@@ -39,7 +86,12 @@ function showProductInfo() {
     htmlContentToAppend += `
                 <div class="row justify-content-md-center">
                     <div class="col-md-8 order-md-1">
-                        <h4 class="mb-3">${product_info.name}</h4>
+                        <div>
+                            <h4 class="mb-3">${product_info.name}</h4>
+                            <div class="d-grid d-md-flex justify-content-md-end">
+                                <button class="btn btn-success" type="button" onclick="agregarCarrito()">Agregar al carrito</button>
+                            </div>
+                        </div>
                         <hr>
                         <div>
                             <label><strong>Precio</strong></label>
@@ -84,11 +136,9 @@ function showProductInfo() {
 
 }
 
-    
-
 function showProductImages(images, description) {
     let htmlContentToAppend = "";
-   htmlContentToAppend += `  
+    htmlContentToAppend += `  
    <div class="row justify-content-md-center">
    <div div class="col-md-7 order-md-1 img-thumbnail">
    <div id="imagenesCarrusel" class="carousel slide" data-bs-ride="carousel">
@@ -123,20 +173,21 @@ function showProductImages(images, description) {
     return htmlContentToAppend;
 }
 
-
 function showProductComments() {
     let htmlContentToAppend = "";
     for (let i = 0; i < currentProductCommentsArray.length; i++) {
         let product_com = currentProductCommentsArray[i];
-    
+
         htmlContentToAppend += `
             <div>
             <div class="row justify-content-md-center">
             <div class="col-md-8 order-md-1 card mb-2">
             `;
-        
+
         htmlContentToAppend += `
-            <p><strong>${product_com.user}</strong> ${showProductRating(product_com.score)}</p>
+            <p><strong>${product_com.user}</strong> ${showProductRating(
+            product_com.score
+        )}</p>
             <p>${product_com.description}</p>
             <p class="text-muted">${product_com.dateTime}</p>
             
@@ -147,18 +198,17 @@ function showProductComments() {
     }
     return htmlContentToAppend;
 }
-    
-function showProductRating(score){
-    let htmlContentToAppend = ""
-    for (let i=0; i<score; i++) 
-        htmlContentToAppend += `<span class="fa fa-star checked"></span>`
-    for (let i=0; i<5-score; i++) 
-        htmlContentToAppend += `<span class="fa fa-star"></span>`
+
+function showProductRating(score) {
+    let htmlContentToAppend = "";
+    for (let i = 0; i < score; i++)
+        htmlContentToAppend += `<span class="fa fa-star checked"></span>`;
+    for (let i = 0; i < 5 - score; i++)
+        htmlContentToAppend += `<span class="fa fa-star"></span>`;
     return htmlContentToAppend;
-} 
+}
 
-
-  function showCommentSection() {
+function showCommentSection() {
     let htmlContentToAppend = "";
     product_info = currentProduct;
     htmlContentToAppend += `
@@ -188,23 +238,20 @@ function showProductRating(score){
     </div>
   </div>
   `;
-  document.getElementById("prod-info-container2").innerHTML = htmlContentToAppend;
+    document.getElementById("prod-info-container2").innerHTML =
+        htmlContentToAppend;
+}
 
-}; 
+function showInputComment() {
+    const description = document.getElementById("comment");
+    const user = localStorage.getItem("account");
+    const input_score = document.getElementById("score");
 
-  function showInputComment(){
-        
-            const description = document.getElementById("comment");
-            const user = localStorage.getItem("account");
-           const input_score = document.getElementById("score");
+    let input_description = description.value;
+    let comment_score = parseInt(input_score.value);
 
-           
-
-            let input_description = description.value;
-            let comment_score = parseInt(input_score.value);
-
-            if (input_description != "" && comment_score!=0) {
-            document.getElementById("prod-info-container1").innerHTML += `
+    if (input_description != "" && comment_score != 0) {
+        document.getElementById("prod-info-container1").innerHTML += `
             <div class="row justify-content-md-center">
             <div class="col-md-8 order-md-1 card mb-2" id="comentarios" >
             <p><strong>${user}</strong> ${showProductRating(comment_score)}</p>
@@ -214,23 +261,29 @@ function showProductRating(score){
             </div>
     
                 `;
-            } else { alert('Debe rellenar todos los campos.')}
-    }; 
+    } else {
+        alert("Debe rellenar todos los campos.");
+    }
+}
 
 function fecha() {
     const hoy = new Date();
-    
-    const formato_hora = `${hoy.getHours().toString().padStart(2,0)}:${hoy.getMinutes().toString().padStart(2,0)}:${hoy.getSeconds().toString().padStart(2,0)}`;
-    const formato_fecha = `${hoy.getFullYear()}-${(hoy.getMonth() + 1).toString().padStart(2,0)}-${hoy.getDate().toString().padStart(2,0)}`;
-    
-    return `${formato_fecha + " " + formato_hora}`;
-};
 
+    const formato_hora = `${hoy.getHours().toString().padStart(2, 0)}:${hoy
+        .getMinutes()
+        .toString()
+        .padStart(2, 0)}:${hoy.getSeconds().toString().padStart(2, 0)}`;
+    const formato_fecha = `${hoy.getFullYear()}-${(hoy.getMonth() + 1)
+        .toString()
+        .padStart(2, 0)}-${hoy.getDate().toString().padStart(2, 0)}`;
+
+    return `${formato_fecha + " " + formato_hora}`;
+}
 
 function showRelatedProducts() {
     let htmlContentToAppend = "";
 
-     htmlContentToAppend +=`
+    htmlContentToAppend += `
         </div>
         </div>
         <div class="row justify-content-md-center">
@@ -241,12 +294,12 @@ function showRelatedProducts() {
     `;
     for (let i = 0; i < currentProduct.relatedProducts.length; i++) {
         let product_rel = currentProduct.relatedProducts[i];
-    
+
         htmlContentToAppend += `
             <div class="col-md-4"onclick="setProdID(${product_rel.id})">
             <div class="card mb-4 custom-card cursor-active">
             `;
-        
+
         htmlContentToAppend += `
             <img class="bd-placeholder-img card-img-top" src="${product_rel.image}"></img>
              <div class= "card-body"> 
@@ -258,16 +311,16 @@ function showRelatedProducts() {
         `;
     }
 
-        htmlContentToAppend +=` 
+    htmlContentToAppend += ` 
         </div> 
         </div>
         </div>
         </div>
         `;
 
-    document.getElementById("prod-info-container3").innerHTML = htmlContentToAppend;
+    document.getElementById("prod-info-container3").innerHTML =
+        htmlContentToAppend;
 }
-
 
 function setProdID(id) {
     localStorage.setItem("prodID", id);
@@ -291,12 +344,11 @@ function showAccount() {
   </div>`;
 
     accountDisplay.innerHTML = htmlContentToAppend;
-};
+}
 
-
-function cerrarSesion (){
+function cerrarSesion() {
     localStorage.clear();
     window.location.href = "login.html";
-    };
+}
 
 document.addEventListener("DOMContentLoaded", showAccount());

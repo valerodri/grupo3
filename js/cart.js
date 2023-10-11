@@ -25,47 +25,6 @@ function cerrarSesion() {
     window.location.href = "login.html";
 }
 
-//document.addEventListener("DOMContentLoaded", showAccount());
-
-/*//Mostrar carrito
-function showCart() {
-    let htmlContentToAppend = "";
-    for (let i = 0; i < currentCartArray.length; i++) {
-        let product = currentCartArray[i];
-
-        htmlContentToAppend += `
-          <tr>
-            <th scope="row"><img src="${product.image}" class="imgCart"></th>
-            <td>${product.name}</td>
-            <td>${product.currency} ${product.unitCost}</td>
-            <td><input type="number" min="1" value="1"></td>
-            <td>${calculateSubtotal(product.unitCost, numberInput)}</td>
-          </tr>`;
-    }
-    document.getElementById("cart-container").innerHTML = htmlContentToAppend;
-}
-
-function calculateSubtotal(cost, cant) {
-    let subTotal = cost * cant;
-    return subTotal;
-}
-
-function returnNumber() {
-    numberInput.addEventListener("change", function () {
-        var valorSeleccionado = numberInput.value;
-        return valorSeleccionado;
-    });
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    getJSONData(url).then(function (resultObj) {
-        console.log(resultObj.status);
-        if (resultObj.status === "ok") {
-            currentCartArray = resultObj.data.articles;
-            showCart();
-        }
-    });
-});*/
 document.addEventListener("DOMContentLoaded", function () {
     showAccount();
 
