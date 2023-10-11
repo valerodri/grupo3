@@ -28,13 +28,19 @@ function cerrarSesion() {
 document.addEventListener("DOMContentLoaded", function () {
     showAccount();
 
-    getJSONData(url).then(function (resultObj) {
+    let cart = localStorage.getItem("cart");
+    if (cart) {
+        cart = JSON.parse(cart);
+        currentCartArray = cart.articles;
+        showCart();
+    }
+    /*getJSONData(url).then(function (resultObj) {
         console.log(resultObj.status);
         if (resultObj.status === "ok") {
             currentCartArray = resultObj.data.articles;
             showCart();
         }
-    });
+    });*/
 });
 
 //Mostrar carrito

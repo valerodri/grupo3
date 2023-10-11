@@ -32,8 +32,7 @@ document.addEventListener("DOMContentLoaded", async function (e) {
     }
 });
 
-//No me deja probar esto porque me dice que no tengo acceso permitido a la API (error 405)
-//Fetch API cannot load https://japceibal.github.io/emercado-api/user_cart/25801.json due to access control checks.
+//prettier-ignore
 function agregarCarrito() {
     getJSONData(url).then(function (resultObj) {
         if (resultObj.status === "ok") {
@@ -41,41 +40,28 @@ function agregarCarrito() {
         }
 
         // Agregar el producto actual al carrito
-        //prettier-ignore
         const item = {
             "id": currentProduct.id,
             "name": currentProduct.name,
             "count": 1,
             "unitCost": currentProduct.cost,
             "currency": currentProduct.currency,
-            "image": currentProduct.images[0]
+            "image": currentProduct.images[0],
         };
 
-        // Obtener el carrito actual del servidor
-        fetch(urlCarrito)
-            .then((response) => response.json())
-            .then((cartData) => {
-                cartData.articles.push(item);
+        // Obtener el carrito actual del almacenamiento local
+        let cart = localStorage.getItem("cart");
+        if (cart) {
+            cart = JSON.parse(cart);
+        } else {
+            cart = { articles: [] };
+        }
 
-                // Realizar una solicitud PUT para actualizar el carrito en el servidor
-                fetch(urlCarrito, {
-                    method: "PUT",
-                    body: JSON.stringify(cartData),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((response) => response.json())
-                    .then((responseData) => {
-                        console.log("exito");
-                    })
-                    .catch((error) => {
-                        console.error("Error al actualizar el carrito:", error);
-                    });
-            })
-            .catch((error) => {
-                console.error("Error al obtener el carrito actual:", error);
-            });
+        // Agregar el nuevo item al carrito
+        cart.articles.push(item);
+
+        // Guardar el carrito actualizado en el almacenamiento local
+        localStorage.setItem("cart", JSON.stringify(cart));
     });
 }
 
