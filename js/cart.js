@@ -56,7 +56,7 @@ function showCart() {
           <th scope="row"><img src="${product.image}" class="imgCart"></th>
           <td>${product.name}</td>
           <td>${product.currency} ${product.unitCost}</td>
-          <td><input type="number" min="1" value="1" id="${uniqueId}"></td>
+          <td><input type="number" class="inputEnvio" min="1" value="1" id="${uniqueId}"></td>
           <td id="subtotal-${uniqueId}">${calculateSubtotal(product.unitCost,1)}</td>
         </tr>`;
     }

@@ -210,3 +210,60 @@ a.custom-card:hover {
   width: 60px;
   height: 40px;
 }
+
+.fit{
+  max-width: 99%;
+  height: auto;
+}
+
+.tipoEnvio{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+@media (max-device-width: 600px) {
+  .footer .container {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+  }
+  img{
+    width: 100%;
+    height: auto;
+  }
+  .jumbotron .text-center {
+    /* INDEX BACKGROUND CELULARES -- ARREGLAR */
+    background: url('../img/index_moviles.png');
+    width: 100%;
+    height: 20vh;
+    max-height: 290px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .lista-buttons {
+    text-align: center;
+    width: 90%;
+  }
+
+  .inputEnvio {
+    width: 55%;
+  }
+
+  .justify-content-md-center{
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+  
+}
+@media (max-width: 900px) {
+  /* INDEX BACKGROUND TABLETS -- por ahora funciona! */
+  .jumbotron {
+  background: url('../img/index_moviles.png');
+  width: 100%;
+  height: 35vh;
+  max-height: 290px;
+  background-size: cover;
+  background-position: justify;}
+  }
