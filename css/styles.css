@@ -250,6 +250,22 @@ div.col-lg-6.offset-lg-6.col-md-12.mb-1.container {
     width: 80%;
     margin-left: 0;
   }
+  
+/* Para que Max y Min se vean en categories y products */
+
+#rangeFilterCountMin::placeholder {
+    font-size: xx-small;
+  }
+#rangeFilterCountMax::placeholder {
+    font-size: xx-small;
+  }
+ 
+#rangeFilterPriceMin::placeholder {
+  font-size: xx-small;
+}
+#rangeFilterPriceMax::placeholder {
+  font-size: xx-small;
+}
 
   div small {
     /* para cada categoria/producto mostrado */
@@ -278,7 +294,7 @@ table {
   margin-left: auto;
   margin-right: auto;
 }
-
+}
 
 @media (max-width: 1000px) {
   /* INDEX BACKGROUND TABLETS -- funciona! */
