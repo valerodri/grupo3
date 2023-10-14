@@ -211,17 +211,12 @@ a.custom-card:hover {
   height: 40px;
 }
 
-.fit{
-  max-width: 99%;
-  height: auto;
-}
-
 .tipoEnvio{
   margin-left: 5%;
   margin-right: 5%;
 }
 
-@media (max-device-width: 600px) {
+@media (max-device-width: 500px) {
   .footer .container {
     flex-direction: column;
     align-items: center;
@@ -231,34 +226,62 @@ a.custom-card:hover {
     width: 100%;
     height: auto;
   }
-  .jumbotron .text-center {
-    /* INDEX BACKGROUND CELULARES -- ARREGLAR */
+  div.jumbotron {
+    /* INDEX BACKGROUND CELULARES */
     background: url('../img/index_moviles.png');
     width: 100%;
-    height: 20vh;
-    max-height: 290px;
-    background-repeat: no-repeat;
+    height: 17.5vh;
+    max-height: 200px;
     background-size: cover;
+    background-position-x: left;
+    
   }
-
-  .lista-buttons {
-    text-align: center;
-    width: 90%;
-  }
-
-  .inputEnvio {
-    width: 55%;
-  }
-
-  .justify-content-md-center{
-      margin-left: auto;
-      margin-right: auto;
-    }
 
   
+
+ div.text-end {
+     /* en categories y products */
+    width: 80%;
+    margin-left: 0; 
+  }
+
+div.col-lg-6.offset-lg-6.col-md-12.mb-1.container {
+    /* en categories y products */
+    width: 80%;
+    margin-left: 0;
+  }
+
+  div small {
+    /* para cada categoria/producto mostrado */
+    font-size: xx-small;
+    text-align: center;
+  }
+
+#comment {
+  /* Comentario en product-info */
+  width: 100%;
 }
-@media (max-width: 900px) {
-  /* INDEX BACKGROUND TABLETS -- por ahora funciona! */
+
+.inputEnvio {
+      /* en carrito */
+    width: 40%;
+    align-self: center;
+  }
+
+table {
+    /* en carrito */
+  font-size: xx-small;
+  text-align: center;
+}
+
+.justify-content-md-center{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+@media (max-width: 1000px) {
+  /* INDEX BACKGROUND TABLETS -- funciona! */
   .jumbotron {
   background: url('../img/index_moviles.png');
   width: 100%;
