@@ -228,12 +228,12 @@ a.custom-card:hover {
   }
   div.jumbotron {
     /* INDEX BACKGROUND CELULARES */
-    background: url('../img/index_moviles.png');
+    background: url('../img/login.png');
     width: 100%;
-    height: 17.5vh;
-    max-height: 200px;
+    height: 200px;
+    max-height: 210px;
     background-size: cover;
-    background-position-x: left;
+    background-position-x: center;
     
   }
 
@@ -299,7 +299,7 @@ table {
 @media (max-width: 1000px) {
   /* INDEX BACKGROUND TABLETS -- funciona! */
   .jumbotron {
-  background: url('../img/index_moviles.png');
+  background: url('../img/login.png');
   width: 100%;
   height: 35vh;
   max-height: 290px;
