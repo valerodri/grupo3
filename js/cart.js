@@ -1,5 +1,6 @@
 const url = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 let currentCartArray = [];
+const totalDisplay = document.getElementById("genericSubtotal");
 
 function showAccount() {
     let accountDisplay = document.getElementById("accountDisplay");
@@ -47,6 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
 //prettier-ignore
 function showCart() {
     let htmlContentToAppend = "";
+    let totalSubtotal = 0;
+
     for (let i = 0; i < currentCartArray.length; i++) {
         let product = currentCartArray[i];
         let uniqueId = `item-${i}`; // Identificador único para cada input
@@ -57,7 +60,7 @@ function showCart() {
           <td>${product.name}</td>
           <td>${product.currency} ${product.unitCost}</td>
           <td><input type="number" class="inputEnvio" min="1" value="1" id="${uniqueId}"></td>
-          <td id="subtotal-${uniqueId}">${calculateSubtotal(product.unitCost,1)}</td>
+          <td id="subtotal-${uniqueId}">${calculateSubtotal(convertCurrency(product),1)}</td>
           <td>
             <button onClick="deleteCart(${i})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -77,11 +80,25 @@ function showCart() {
 
         inputElement.addEventListener("input", function () {
             const cantidad = parseInt(inputElement.value);
-            const subtotal = calculateSubtotal(product.unitCost, cantidad);
+            const convertedCost = convertCurrency(product);
             const subtotalElement = document.getElementById(`subtotal-${uniqueId}`);
-            subtotalElement.textContent = subtotal;
+            const oldSubtotal = parseFloat(subtotalElement.textContent);
+            const newSubtotal = calculateSubtotal(convertedCost, cantidad);
+            subtotalElement.textContent = newSubtotal;
+            totalSubtotal = totalSubtotal - oldSubtotal + newSubtotal;
+            totalDisplay.textContent = totalSubtotal;
         });
+        const convertedCost = convertCurrency(product);
+        totalSubtotal += calculateSubtotal(convertedCost, 1);
     });
+    totalDisplay.textContent = totalSubtotal;
+}
+
+function convertCurrency(product) {
+    if (product.currency === "UYU") {
+        return (product.unitCost / 39).toFixed(); // Realiza la conversión según la tasa
+    }
+    return product.unitCost;
 }
 
 /* La idea es que, basandonos en la posición del elemento en el carrito (i), 
@@ -95,6 +112,17 @@ function deleteCart(pos) {
         );
         showCart();
     }
+}
+
+function updateTotalSubtotal() {
+    let totalSubtotal = 0;
+    currentCartArray.forEach((product, i) => {
+        const uniqueId = `item-${i}`;
+        const cantidadElement = document.getElementById(uniqueId);
+        const cantidad = parseInt(cantidadElement.value);
+        totalSubtotal += calculateSubtotal(product.unitCost, cantidad);
+    });
+    totalDisplay.textContent = totalSubtotal; // Actualiza el elemento HTML con el total
 }
 
 function calculateSubtotal(cost, cant) {

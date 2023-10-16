@@ -55,7 +55,7 @@
           <th scope="col">Nombre</th>
           <th scope="col">Costo</th>
           <th scope="col">Cantidad</th>
-          <th scope="col">Subtotal</th>
+          <th scope="col">Subtotal (USD)</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -110,6 +110,44 @@
         </div>
     </div>
     
+    <!--Contenido de información del total-->
+    <div>
+      <div class="container">
+        <p class="lead">
+          Costos
+        </p>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-10">Subtotal <br>
+                <label class="fst-italic">Costo unitario del producto por cantidad</label>
+              </div>
+              <div class="col-2" id="genericSubtotal">
+                subtotal  
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-10">Costo de envío <br>
+                <label class="fst-italic">Según el tipo de envío</label>
+              </div>
+              <div class="col-2">
+                costo envio
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-10">Total($)</div>
+              <div class="col-2">
+                total
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <footer class="text-muted">
