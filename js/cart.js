@@ -1,6 +1,7 @@
 const url = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 let currentCartArray = [];
 const totalDisplay = document.getElementById("genericSubtotal");
+const shipValues = document.querySelectorAll('.tipoEnvio input[type="radio"]');
 
 function showAccount() {
     let accountDisplay = document.getElementById("accountDisplay");
@@ -128,3 +129,34 @@ function updateTotalSubtotal() {
 function calculateSubtotal(cost, cant) {
     return cost * cant;
 }
+
+// Agrega un evento de cambio para cada radio button
+shipValues.forEach((radio) => {
+    radio.addEventListener("change", function () {
+        // Obtiene el valor del radio button seleccionado
+        const selectedValue = radio.value;
+
+        // Obtiene el valor del totalSubtotal
+        const totalSubtotal = parseFloat(totalDisplay.textContent);
+
+        // Calcula el costo de envío según la opción seleccionada
+        let shippingCost = 0;
+        if (selectedValue === "premium") {
+            shippingCost = totalSubtotal * 0.15;
+        } else if (selectedValue === "express") {
+            shippingCost = totalSubtotal * 0.07;
+        } else if (selectedValue === "standard") {
+            shippingCost = totalSubtotal * 0.05;
+        }
+
+        // Actualiza el costo de envío en el HTML
+        const costoEnvioElement = document.querySelector("#genericCostoEnvio");
+        costoEnvioElement.textContent = `${shippingCost.toFixed(2)}`;
+
+        const absTotal = totalSubtotal + shippingCost;
+
+        // Actualiza el elemento HTML con el total absoluto
+        const absTotalElement = document.querySelector("#absTotal");
+        absTotalElement.textContent = `${absTotal.toFixed(2)}`;
+    });
+});
