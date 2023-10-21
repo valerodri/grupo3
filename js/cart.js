@@ -61,7 +61,7 @@ function showCart() {
           <td>${product.name}</td>
           <td>${product.currency} ${product.unitCost}</td>
           <td><input type="number" class="inputEnvio" min="1" value="1" id="${uniqueId}"></td>
-          <td id="subtotal-${uniqueId}">${calculateSubtotal(convertCurrency(product),1)}</td>
+          <td id="subtotal-${uniqueId}">USD ${calculateSubtotal(convertCurrency(product),1)}</td>
           <td>
             <button onClick="deleteCart(${i})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -87,6 +87,7 @@ function showCart() {
             const newSubtotal = calculateSubtotal(convertedCost, cantidad);
             subtotalElement.textContent = newSubtotal;
             totalSubtotal = totalSubtotal - oldSubtotal + newSubtotal;
+            console.log("el total es:"+totalSubtotal)
             totalDisplay.textContent = totalSubtotal;
         });
         const convertedCost = convertCurrency(product);
@@ -141,6 +142,7 @@ shipValues.forEach((radio) => {
 
         // Calcula el costo de envío según la opción seleccionada
         let shippingCost = 0;
+        console.log(shippingCost)
         if (selectedValue === "premium") {
             shippingCost = totalSubtotal * 0.15;
         } else if (selectedValue === "express") {
