@@ -305,4 +305,11 @@ table {
   max-height: 290px;
   background-size: cover;
   background-position: justify;}
+  
+img{
+    width: 100%;
+    height: auto;
   }
+
+  }
+

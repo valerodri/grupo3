@@ -144,6 +144,84 @@
         </ul>
       </div>
     </div>
+
+
+    <div class="container">
+      <div class="row">
+        <p class="lead">Forma de Pago</p>
+        <div class="">
+          <div class="">
+            <div class="">
+              <p class="p-0 me-2 d-inline" id="paymentSelection">No ha sido seleccionado</p>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</a>
+            </div>
+               <!-- <p class="invalidFeedback">Debe seleccionar una forma de pago</p> -->
+          </div> 
+        </div>
+      </div>
+
+      <!-- Modal -->
+        <div class="container">
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Forma de Pago</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="border-bottom pb-3 mb-3">
+										<input type="radio" id="paymentMethod1" name="paymentMethod" />
+										<label for="paymentMethod1">Tarjeta de Crédito</label>
+									</div>
+
+									<div class="row g-3 mb-3">
+										<div class="col-sm-6">
+											<label for="cardNumber" class="form-label">Número de Tarjeta</label>
+											<input type="text" class="form-control" id="cardNumber" required />
+											<div class="invalid-feedback">Ingrese el número de su tarjeta.</div>
+										</div>
+
+										<div class="col-sm-6">
+											<label for="securityCode" class="form-label">Código de Seguridad</label>
+											<input type="text" class="form-control" id="securityCode" required />
+											<div class="invalid-feedback">Ingrese el código de seguridad de su tarjeta.</div>
+										</div>
+
+										<div class="col-sm-6">
+											<label for="expiration" class="form-label">Vencimiento (MM/AA)</label>
+											<input type="text" class="form-control" id="expiration" required />
+											<div class="invalid-feedback">Ingrese el vencimiento de su tarjeta.</div>
+										</div>
+									</div>
+
+									<div class="border-bottom pb-3 mb-3">
+										<input type="radio" id="paymentMethod2" name="paymentMethod" />
+										<label for="paymentMethod2">Transferencia Bancaria</label>
+									</div>
+
+									<div class="row g-3">
+										<div class="col-sm-6">
+											<label for="accountNumber" class="form-label">Número de Cuenta</label>
+											<input type="text" class="form-control" id="accountNumber" required />
+											<div class="invalid-feedback">Ingrese un número de cuenta.</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+        </div>
+
+
+        <div class="container">
+          <button class="btn btn-primary col-12" id="submitForm" type="submit">Finalizar Compra</button>
+        </div>
+      
+
   </div>
 
   <footer class="text-muted">

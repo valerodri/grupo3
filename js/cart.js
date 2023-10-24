@@ -188,3 +188,31 @@ shipValues.forEach((radio) => {
     });
 });
 
+const cardNumber = document.getElementById("cardNumber");
+const securityCode = document.getElementById("securityCode");
+const expiration = document.getElementById("expiration");
+const accountNumber = document.getElementById("accountNumber");
+const paymentSelection = document.getElementById("paymentSelection");
+
+// Validaciones Modal - Tarjeta de Credito
+	document.getElementById("paymentMethod1").addEventListener("click", () => {
+		accountNumber.setAttribute("disabled", "");
+		cardNumber.removeAttribute("disabled", "");
+		securityCode.removeAttribute("disabled", "");
+		expiration.removeAttribute("disabled", "");
+
+		paymentSelection.innerHTML = "Tarjeta de Crédito";
+		invalidFeedback.style.display = "none";
+	});
+
+// Validaciones Modal - Transferencia Bancaria
+
+	document.getElementById("paymentMethod2").addEventListener("click", () => {
+		accountNumber.removeAttribute("disabled", "");
+		cardNumber.setAttribute("disabled", "");
+		securityCode.setAttribute("disabled", "");
+		expiration.setAttribute("disabled", "");
+
+		paymentSelection.innerHTML = "Transferencia Bancaria";
+		invalidFeedback.style.display = "none";
+	});
