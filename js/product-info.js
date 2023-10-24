@@ -34,10 +34,11 @@ document.addEventListener("DOMContentLoaded", async function (e) {
 
 //prettier-ignore
 function agregarCarrito() {
-    getJSONData(url).then(function (resultObj) {
+    /* getJSONData(url).then(function (resultObj) {
         if (resultObj.status === "ok") {
             product = resultObj.data;
         }
+         */
 
         // Agregar el producto actual al carrito
         const item = {
@@ -58,11 +59,22 @@ function agregarCarrito() {
         }
 
         // Agregar el nuevo item al carrito
-        cart.articles.push(item);
+        let yaexiste = false;
+
+        for (let index = 0; index < cart.articles.length; index++) {
+            if (cart.articles[index].id==item.id){
+                cart.articles[index].count++;
+                yaexiste = true;
+                break;
+            }  
+        }
+        if (!yaexiste){
+            cart.articles.push(item);
+        }
 
         // Guardar el carrito actualizado en el almacenamiento local
         localStorage.setItem("cart", JSON.stringify(cart));
-    });
+    
 }
 
 //prettier-ignore

@@ -60,8 +60,8 @@ function showCart() {
           <th scope="row"><img src="${product.image}" class="imgCart"></th>
           <td>${product.name}</td>
           <td>${product.currency} ${product.unitCost}</td>
-          <td><input type="number" class="inputEnvio" min="1" value="1" id="${uniqueId}"></td>
-          <td id="subtotal-${uniqueId}">USD ${calculateSubtotal(convertCurrency(product),1)}</td>
+          <td><input type="number" class="inputEnvio" min="1" value="${product.count}" id="${uniqueId}"></td>
+          <td id="subtotal-${uniqueId}">${product.count*calculateSubtotal(convertCurrency(product),1)}</td>
           <td>
             <button onClick="deleteCart(${i})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -72,6 +72,7 @@ function showCart() {
           </td>
         </tr>`;
     }
+    
     document.getElementById("cart-container").innerHTML = htmlContentToAppend;
 
     // Escucha el evento input para cada input y actualiza los subtotales
@@ -80,21 +81,25 @@ function showCart() {
         const inputElement = document.getElementById(uniqueId);
 
         inputElement.addEventListener("input", function () {
-            const cantidad = parseInt(inputElement.value);
-            const convertedCost = convertCurrency(product);
-            const subtotalElement = document.getElementById(`subtotal-${uniqueId}`);
-            const oldSubtotal = parseFloat(subtotalElement.textContent);
-            const newSubtotal = calculateSubtotal(convertedCost, cantidad);
-            subtotalElement.textContent = newSubtotal;
+            const cantidad = parseInt(inputElement.value);                              //cantidad en columna flechitas
+            const convertedCost = convertCurrency(product);                           //costo en dolares
+            const subtotalElement = document.getElementById(`subtotal-${uniqueId}`);    //columna subtotal
+            const oldSubtotal = parseFloat(subtotalElement.textContent);                //subtotalElement convertido a numero
+            const newSubtotal = calculateSubtotal(convertedCost, cantidad);             //precio en dolares por cantidad
+            subtotalElement.textContent = newSubtotal;                                  //columna subtotal convertida a numeros
             totalSubtotal = totalSubtotal - oldSubtotal + newSubtotal;
-            console.log("el total es:"+totalSubtotal)
             totalDisplay.textContent = totalSubtotal;
         });
         const convertedCost = convertCurrency(product);
-        totalSubtotal += calculateSubtotal(convertedCost, 1);
+
+        totalSubtotal += calculateSubtotal(convertedCost, product.count);
+
     });
+   
     totalDisplay.textContent = totalSubtotal;
+   
 }
+
 
 function convertCurrency(product) {
     if (product.currency === "UYU") {
@@ -142,7 +147,6 @@ shipValues.forEach((radio) => {
 
         // Calcula el costo de envío según la opción seleccionada
         let shippingCost = 0;
-        console.log(shippingCost)
         if (selectedValue === "premium") {
             shippingCost = totalSubtotal * 0.15;
         } else if (selectedValue === "express") {
