@@ -2,6 +2,7 @@ const url = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 let currentCartArray = [];
 const totalDisplay = document.getElementById("genericSubtotal");
 const shipValues = document.querySelectorAll('.tipoEnvio input[type="radio"]');
+let selectedShip = "premium"
 
 function showAccount() {
     let accountDisplay = document.getElementById("accountDisplay");
@@ -81,25 +82,39 @@ function showCart() {
         const inputElement = document.getElementById(uniqueId);
 
         inputElement.addEventListener("input", function () {
-            const cantidad = parseInt(inputElement.value);                              //cantidad en columna flechitas
-            const convertedCost = convertCurrency(product);                           //costo en dolares
-            const subtotalElement = document.getElementById(`subtotal-${uniqueId}`);    //columna subtotal
-            const oldSubtotal = parseFloat(subtotalElement.textContent);                //subtotalElement convertido a numero
-            const newSubtotal = calculateSubtotal(convertedCost, cantidad);             //precio en dolares por cantidad
-            subtotalElement.textContent = newSubtotal;                                  //columna subtotal convertida a numeros
-            totalSubtotal = totalSubtotal - oldSubtotal + newSubtotal;
-            totalDisplay.textContent = totalSubtotal;
+            product.count = inputElement.value;
+            actualizarCarrito(product);
+            showCart();
+            actualizarCostoEnvio();
+
         });
         const convertedCost = convertCurrency(product);
-
         totalSubtotal += calculateSubtotal(convertedCost, product.count);
 
     });
    
     totalDisplay.textContent = totalSubtotal;
-   
+   actualizarCostoEnvio();
 }
 
+function actualizarCarrito(product){
+    // Obtener el carrito actual del almacenamiento local
+    let cart = localStorage.getItem("cart");
+    if (cart) {
+        cart = JSON.parse(cart);
+
+        // Agregar el nuevo item al carrito
+        for (let index = 0; index < cart.articles.length; index++) {
+            if (cart.articles[index].id == product.id){
+                cart.articles[index].count = product.count;
+                break;  
+                }
+        }
+
+        // Guardar el carrito actualizado en el almacenamiento local
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+}
 
 function convertCurrency(product) {
     if (product.currency === "UYU") {
@@ -136,33 +151,40 @@ function calculateSubtotal(cost, cant) {
     return cost * cant;
 }
 
+function actualizarCostoEnvio(){
+    // Obtiene el valor del radio button seleccionado
+
+    // Obtiene el valor del totalSubtotal
+    const totalSubtotal = parseFloat(totalDisplay.textContent);
+
+    // Calcula el costo de envío según la opción seleccionada
+    let shippingCost = 0;
+    if (selectedShip === "premium") {
+        shippingCost = totalSubtotal * 0.15;
+    } else if (selectedShip === "express") {
+        shippingCost = totalSubtotal * 0.07;
+    } else if (selectedShip === "standard") {
+        shippingCost = totalSubtotal * 0.05;
+    }    
+
+    // Actualiza el costo de envío en el HTML
+    const costoEnvioElement = document.querySelector("#genericCostoEnvio");
+    costoEnvioElement.textContent = `${shippingCost.toFixed(2)}`;
+
+    const absTotal = totalSubtotal + shippingCost;
+
+    // Actualiza el elemento HTML con el total absoluto
+    const absTotalElement = document.querySelector("#absTotal");
+    absTotalElement.textContent = `${absTotal.toFixed(2)}`;
+}
+
 // Agrega un evento de cambio para cada radio button
+
 shipValues.forEach((radio) => {
     radio.addEventListener("change", function () {
-        // Obtiene el valor del radio button seleccionado
-        const selectedValue = radio.value;
+        selectedShip = radio.value;
+        actualizarCostoEnvio();
 
-        // Obtiene el valor del totalSubtotal
-        const totalSubtotal = parseFloat(totalDisplay.textContent);
-
-        // Calcula el costo de envío según la opción seleccionada
-        let shippingCost = 0;
-        if (selectedValue === "premium") {
-            shippingCost = totalSubtotal * 0.15;
-        } else if (selectedValue === "express") {
-            shippingCost = totalSubtotal * 0.07;
-        } else if (selectedValue === "standard") {
-            shippingCost = totalSubtotal * 0.05;
-        }
-
-        // Actualiza el costo de envío en el HTML
-        const costoEnvioElement = document.querySelector("#genericCostoEnvio");
-        costoEnvioElement.textContent = `${shippingCost.toFixed(2)}`;
-
-        const absTotal = totalSubtotal + shippingCost;
-
-        // Actualiza el elemento HTML con el total absoluto
-        const absTotalElement = document.querySelector("#absTotal");
-        absTotalElement.textContent = `${absTotal.toFixed(2)}`;
     });
 });
+
