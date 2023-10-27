@@ -156,7 +156,6 @@ function calculateSubtotal(cost, cant) {
 }
 
 function actualizarCostoEnvio(){
-    // Obtiene el valor del radio button seleccionado
 
     // Obtiene el valor del totalSubtotal
     const totalSubtotal = parseFloat(totalDisplay.textContent);
@@ -187,6 +186,7 @@ function actualizarCostoEnvio(){
 shipValues.forEach((radio) => {
     radio.addEventListener("change", function () {
         selectedShip = radio.value;
+        
         actualizarCostoEnvio();
 
     });
@@ -245,6 +245,7 @@ const formCart = document.getElementById("formCart");
 		);
 	});
 })();
+
 
 //Validaciones para el Formulario.
 formCart.addEventListener("submit", (event) => {
