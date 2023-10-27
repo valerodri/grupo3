@@ -45,7 +45,7 @@
     <p class="lead">Artículos a comprar</p>
   </div>
   
-      <!--Contenido del carrito-->
+  <!--Contenido del carrito-->
   <div id="cartContainer" class="pb-5 container justify-content-md-center order-md-1">
     <!--Tabla de productos-->
     <table class="table table-striped-columns text-center">
@@ -59,62 +59,58 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody class="table-group-divider" id="cart-container"></tbody>
+      <tbody class="table-group-divider" id="cart-container">
+      </tbody>
     </table>
 
     <!--Contenedor tipo de envío-->
     <form id="formCart" class="needs-validation" novalidate>
-    <fieldset>
-      <div class="container pt-3 tipoEnvio">
-        <p class="lead">Típo de envío</p>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" value="premium" name="flexRadioDefault" id="flexRadioDefault1" checked>
-        <label class="form-check-label" for="flexRadioDefault1">
-            Premium 2 a 5 días (15%)
-        </label>
-      </div>
-      <div class="form-check">
-          <input class="form-check-input" type="radio" value="express" name="flexRadioDefault" id="flexRadioDefault2">
-          <label class="form-check-label" for="flexRadioDefault2">
-              Express 5 a 8 días (7%)
-          </label>
-      </div>
-      <div class="form-check">
-          <input class="form-check-input" type="radio" value="standard" name="flexRadioDefault" id="flexRadioDefault3">
-          <label class="form-check-label" for="flexRadioDefault3">
-              Standard 12 a 15 días (5%)
-          </label>
-      </div> <br>
-      </div>
-      
-    </fieldset>
+      <fieldset>
+        <div class="container pt-3 tipoEnvio">
+          <p class="lead">Típo de envío</p>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="premium" name="flexRadioDefault" id="flexRadioDefault1" checked>
+            <label class="form-check-label" for="flexRadioDefault1">
+                Premium 2 a 5 días (15%)
+            </label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="radio" value="express" name="flexRadioDefault" id="flexRadioDefault2">
+              <label class="form-check-label" for="flexRadioDefault2">
+                  Express 5 a 8 días (7%)
+              </label>
+          </div>
+          <div class="form-check">
+              <input class="form-check-input" type="radio" value="standard" name="flexRadioDefault" id="flexRadioDefault3">
+              <label class="form-check-label" for="flexRadioDefault3">
+                  Standard 12 a 15 días (5%)
+              </label>
+          </div> 
+        <br>
+        </div>     
+      </fieldset>
     
     <!--Contenedor dirección de envío-->
     <fieldset class="form-group">
       <div class="container pt-0">
         <p class="lead">Dirección de envío</p>
           <div class="row row-cols-2">
-            
             <div class="">
               <label for="inputStreet">Calle</label>
               <input type="text" class="form-control" id="inputStreet" placeholder="Calle" required="" />
               <div class="invalid-feedback">Debe de ingresar una calle.</div>
             </div>
-
             <div>
               <label for="inputNum">Número</label>
               <input type="number" class="form-control" id="inputNum" placeholder="Número" required="" />
               <div class="invalid-feedback">Debe de ingresar un número de calle.</div>
             </div>
-
             <div class="col mt-3">
-            <label for="inputEsqui">Esquina</label>
-            <input type="text" class="form-control" id="inputEsqui" placeholder="Esquina" required="" />
-            <div class="invalid-feedback">Debe de ingresar una esquina.</div>
+              <label for="inputEsqui">Esquina</label>
+              <input type="text" class="form-control" id="inputEsqui" placeholder="Esquina" required="" />
+              <div class="invalid-feedback">Debe de ingresar una esquina.</div>
+            </div>
           </div>
-
-          </div>
-
       </div>
     </fieldset>
     
@@ -160,9 +156,12 @@
               <div id="formaPago">
                 
                   <p class="p-0 me-2 d-inline" id="paymentSelection">No ha sido seleccionado</p>
+                  <input type="checkbox" id="checkboxFacu" class="form-check-input invalid-feedback" required></input>
+
                   <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar</a>
+
                
-                  <p class="invalidFeedback">Debe seleccionar una forma de pago</p> 
+                  <p class="invalid-feedback" id="validPago">Debe seleccionar una forma de pago</p> 
               </div> 
           </div>
 

@@ -198,24 +198,31 @@ const expiration = document.getElementById("expiration");
 const accountNumber = document.getElementById("accountNumber");
 const paymentSelection = document.getElementById("paymentSelection");
 const formCart = document.getElementById("formCart");
+const formaPago = document.getElementById("formaPago");
+const paymentMethod1 = document.getElementById("paymentMethod1");
+const paymentMethod2 = document.getElementById("paymentMethod2");
+const checkboxFacu = document.getElementById("checkboxFacu");
+
 
 // Validaciones Modal - Tarjeta de Credito
-	document.getElementById("paymentMethod1").addEventListener("click", () => {
+	paymentMethod1.addEventListener("click", () => {
 		accountNumber.setAttribute("disabled", "");
 		cardNumber.removeAttribute("disabled", "");
 		securityCode.removeAttribute("disabled", "");
 		expiration.removeAttribute("disabled", "");
+        checkboxFacu.click();
 
 		paymentSelection.innerHTML = "Tarjeta de Crédito";
 	});
 
 // Validaciones Modal - Transferencia Bancaria
 
-	document.getElementById("paymentMethod2").addEventListener("click", () => {
+	paymentMethod2.addEventListener("click", () => {
 		accountNumber.removeAttribute("disabled", "");
 		cardNumber.setAttribute("disabled", "");
 		securityCode.setAttribute("disabled", "");
 		expiration.setAttribute("disabled", "");
+        checkboxFacu.click();
 
 		paymentSelection.innerHTML = "Transferencia Bancaria";
 
@@ -236,9 +243,10 @@ const formCart = document.getElementById("formCart");
 				if (!form.checkValidity()) {
 					event.preventDefault();
 					event.stopPropagation();
-				}
-
+				}; 
+                
 				form.classList.add("was-validated");
+
 
 			},
 			false
