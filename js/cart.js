@@ -44,6 +44,10 @@ document.addEventListener("DOMContentLoaded", function () {
             showCart();
         }
     });*/
+    
+	document.querySelector(".btn-close").addEventListener("click", () => {
+		document.querySelector(".alert").style.display = "none";
+	});
 });
 
 //Mostrar carrito
@@ -193,6 +197,7 @@ const securityCode = document.getElementById("securityCode");
 const expiration = document.getElementById("expiration");
 const accountNumber = document.getElementById("accountNumber");
 const paymentSelection = document.getElementById("paymentSelection");
+const formCart = document.getElementById("formCart");
 
 // Validaciones Modal - Tarjeta de Credito
 	document.getElementById("paymentMethod1").addEventListener("click", () => {
@@ -202,7 +207,6 @@ const paymentSelection = document.getElementById("paymentSelection");
 		expiration.removeAttribute("disabled", "");
 
 		paymentSelection.innerHTML = "Tarjeta de Crédito";
-		invalidFeedback.style.display = "none";
 	});
 
 // Validaciones Modal - Transferencia Bancaria
@@ -214,5 +218,47 @@ const paymentSelection = document.getElementById("paymentSelection");
 		expiration.setAttribute("disabled", "");
 
 		paymentSelection.innerHTML = "Transferencia Bancaria";
-		invalidFeedback.style.display = "none";
+
 	});
+
+
+(function () {
+	"use strict";
+
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	const forms = document.querySelectorAll(".needs-validation");
+
+// Loop over them and prevent submission
+	Array.prototype.slice.call(forms).forEach(function (form) {
+		form.addEventListener(
+			"submit",
+			function (event) {
+				if (!form.checkValidity()) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
+				form.classList.add("was-validated");
+
+			},
+			false
+		);
+	});
+})();
+
+//Validaciones para el Formulario.
+formCart.addEventListener("submit", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+// Si se valida el form mostrar una alert de que la compra se realizo con exito 
+    if (formCart.checkValidity()) {
+        
+        document.querySelector(".alert").style.display = "block";
+    }
+});
+    
+document.querySelector(".alert").addEventListener( "click", () => {
+// Redirigir al usuario a la página index.html
+    window.location.href = "index.html";
+});
