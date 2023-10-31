@@ -2,7 +2,7 @@ const url = "https://japceibal.github.io/emercado-api/user_cart/25801.json";
 let currentCartArray = [];
 const totalDisplay = document.getElementById("genericSubtotal");
 const shipValues = document.querySelectorAll('.tipoEnvio input[type="radio"]');
-let selectedShip = "premium"
+let selectedShip = "premium";
 
 function showAccount() {
     let accountDisplay = document.getElementById("accountDisplay");
@@ -44,10 +44,10 @@ document.addEventListener("DOMContentLoaded", function () {
             showCart();
         }
     });*/
-    
-	document.querySelector(".btn-close").addEventListener("click", () => {
-		document.querySelector(".alert").style.display = "none";
-	});
+
+    document.querySelector(".btn-close").addEventListener("click", () => {
+        document.querySelector(".alert").style.display = "none";
+    });
 });
 
 //Mostrar carrito
@@ -101,7 +101,7 @@ function showCart() {
    actualizarCostoEnvio();
 }
 
-function actualizarCarrito(product){
+function actualizarCarrito(product) {
     // Obtener el carrito actual del almacenamiento local
     let cart = localStorage.getItem("cart");
     if (cart) {
@@ -109,10 +109,10 @@ function actualizarCarrito(product){
 
         // Agregar el nuevo item al carrito
         for (let index = 0; index < cart.articles.length; index++) {
-            if (cart.articles[index].id == product.id){
+            if (cart.articles[index].id == product.id) {
                 cart.articles[index].count = product.count;
-                break;  
-                }
+                break;
+            }
         }
 
         // Guardar el carrito actualizado en el almacenamiento local
@@ -155,8 +155,7 @@ function calculateSubtotal(cost, cant) {
     return cost * cant;
 }
 
-function actualizarCostoEnvio(){
-
+function actualizarCostoEnvio() {
     // Obtiene el valor del totalSubtotal
     const totalSubtotal = parseFloat(totalDisplay.textContent);
 
@@ -168,7 +167,7 @@ function actualizarCostoEnvio(){
         shippingCost = totalSubtotal * 0.07;
     } else if (selectedShip === "standard") {
         shippingCost = totalSubtotal * 0.05;
-    }    
+    }
 
     // Actualiza el costo de envío en el HTML
     const costoEnvioElement = document.querySelector("#genericCostoEnvio");
@@ -186,9 +185,8 @@ function actualizarCostoEnvio(){
 shipValues.forEach((radio) => {
     radio.addEventListener("change", function () {
         selectedShip = radio.value;
-        
-        actualizarCostoEnvio();
 
+        actualizarCostoEnvio();
     });
 });
 
@@ -203,71 +201,64 @@ const paymentMethod1 = document.getElementById("paymentMethod1");
 const paymentMethod2 = document.getElementById("paymentMethod2");
 const checkboxFacu = document.getElementById("checkboxFacu");
 
-
 // Validaciones Modal - Tarjeta de Credito
-	paymentMethod1.addEventListener("click", () => {
-		accountNumber.setAttribute("disabled", "");
-		cardNumber.removeAttribute("disabled", "");
-		securityCode.removeAttribute("disabled", "");
-		expiration.removeAttribute("disabled", "");
-        checkboxFacu.click();
+paymentMethod1.addEventListener("click", () => {
+    accountNumber.setAttribute("disabled", "");
+    cardNumber.removeAttribute("disabled", "");
+    securityCode.removeAttribute("disabled", "");
+    expiration.removeAttribute("disabled", "");
+    checkboxFacu.click();
 
-		paymentSelection.innerHTML = "Tarjeta de Crédito";
-	});
+    paymentSelection.innerHTML = "Tarjeta de Crédito";
+});
 
 // Validaciones Modal - Transferencia Bancaria
 
-	paymentMethod2.addEventListener("click", () => {
-		accountNumber.removeAttribute("disabled", "");
-		cardNumber.setAttribute("disabled", "");
-		securityCode.setAttribute("disabled", "");
-		expiration.setAttribute("disabled", "");
-        checkboxFacu.click();
+paymentMethod2.addEventListener("click", () => {
+    accountNumber.removeAttribute("disabled", "");
+    cardNumber.setAttribute("disabled", "");
+    securityCode.setAttribute("disabled", "");
+    expiration.setAttribute("disabled", "");
+    checkboxFacu.click();
 
-		paymentSelection.innerHTML = "Transferencia Bancaria";
-
-	});
-
+    paymentSelection.innerHTML = "Transferencia Bancaria";
+});
 
 (function () {
-	"use strict";
+    "use strict";
 
-// Fetch all the forms we want to apply custom Bootstrap validation styles to
-	const forms = document.querySelectorAll(".needs-validation");
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".needs-validation");
 
-// Loop over them and prevent submission
-	Array.prototype.slice.call(forms).forEach(function (form) {
-		form.addEventListener(
-			"submit",
-			function (event) {
-				if (!form.checkValidity()) {
-					event.preventDefault();
-					event.stopPropagation();
-				}; 
-                
-				form.classList.add("was-validated");
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener(
+            "submit",
+            function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
 
-
-			},
-			false
-		);
-	});
+                form.classList.add("was-validated");
+            },
+            false
+        );
+    });
 })();
-
 
 //Validaciones para el Formulario.
 formCart.addEventListener("submit", (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-// Si se valida el form mostrar una alert de que la compra se realizo con exito 
+    // Si se valida el form mostrar una alert de que la compra se realizo con exito
     if (formCart.checkValidity()) {
-        
         document.querySelector(".alert").style.display = "block";
     }
 });
-    
-document.querySelector(".alert").addEventListener( "click", () => {
-// Redirigir al usuario a la página index.html
+
+document.querySelector(".alert").addEventListener("click", () => {
+    // Redirigir al usuario a la página index.html
     window.location.href = "index.html";
 });

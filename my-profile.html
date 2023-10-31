@@ -51,11 +51,53 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
-    </div>
+    <form id="formProfile" class="needs-validation pb-6 mb-6" novalidate>
+      <fieldset class="form-group">
+        <div class="border-bottom pb-3 mb-3 text-center p-4">
+          <h2>Perfil</h2>
+        </div>
+        <div class="container pt-0">
+            <div class="row row-cols-2">
+              <div class="">
+                <label for="inputNom">Primer nombre*</label>
+                <input type="text" class="form-control" id="inputNombre" placeholder="Nombre" required>
+                <div class="invalid-feedback">Debe de ingresar su nombre.</div>
+              </div>
+              <div>
+                <label for="inputNombre">Segundo nombre</label>
+                <input type="text" class="form-control" id="inputSegundoNombre" placeholder="Segundo nombre (opcional)">
+              </div>
+              <div class="col mt-3">
+                <label for="inputApellido">Primer apellido*</label>
+                <input type="text" class="form-control" id="inputApellido" placeholder="Apellido" required>
+                <div class="invalid-feedback">Debe de ingresar su apellido</div>
+              </div>
+              <div class="col mt-3">
+                <label for="inputSegundoApellido">Segundo apellido</label>
+                <input type="text" class="form-control" id="inputSegundoApellido" placeholder="Segundo apellido (opcional)">
+              </div>
+              <div class="col mt-3">
+                <label for="inputEmail">Email</label>
+                <input type="text" class="form-control" id="inputEmail" readonly>
+              </div>
+              <div class="col mt-3">
+                <label for="inputTelefono">Teléfono de contacto*</label>
+                <input type="number" class="form-control" id="inputTelefono" placeholder="Teléfono" required>
+                <div class="invalid-feedback">Debe de ingresar un teléfono de contacto.</div>
+              </div>
+            </div>
+        </div>
+        <div class="container pt-4 border-top pt-3 mt-3">
+          <button class="btn btn-primary col-2" id="save" type="submit">Guardar cambios</button>
+        </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <p class="mb-0">¡Has guardado los cambios con éxito!</p>
+          <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+      </fieldset>
+    </form>
+    
+
   </main>
   <footer class="text-muted">
     <div class="container">
