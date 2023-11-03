@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", showAccount());
 document.addEventListener("DOMContentLoaded", function () {
     const account = localStorage.getItem("account");
     const email = document.getElementById("inputEmail");
+    const image = document.getElementById("inputFoto");
+    const perfil = document.getElementById("fotoPerfil");
 
     email.value = account;
 
@@ -45,6 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
         surname.value = user.apellido;
         secondSurname.value = user.segundoApellido;
         phone.value = user.telefono;
+
+
+    }
+
+    if (!image.files.length) {
+        perfil.src = "img/fotoperfilanonimo.jpeg";
     }
 });
 
@@ -84,6 +92,8 @@ formProfile.addEventListener("submit", (event) => {
         const surname = document.getElementById("inputApellido");
         const secondSurname = document.getElementById("inputSegundoApellido");
         const phone = document.getElementById("inputTelefono");
+        const image = document.getElementById("inputFoto");
+        
         document.querySelector(".alert").style.display = "block";
 
         //prettier-ignore

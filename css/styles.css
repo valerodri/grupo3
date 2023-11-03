@@ -295,6 +295,16 @@ table {
   margin-left: auto;
   margin-right: auto;
 }
+
+#fotoPerfil {
+  height: 20vh;
+  width: auto;
+}
+
+#formProfile.row-cols-2 {
+font-size: x-small;
+}
+
 }
 
 @media (max-width: 1000px) {
@@ -312,7 +322,12 @@ img{
     height: auto;
   }
 
-  }
+#fotoPerfil {
+    height: 35vh;
+    width: auto;
+}
+
+}
 
   /* cart*/
 

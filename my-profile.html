@@ -53,8 +53,9 @@
   <main>
     <form id="formProfile" class="needs-validation pb-6 mb-6" novalidate>
       <fieldset class="form-group">
-        <div class="border-bottom pb-3 mb-3 text-center p-4">
+        <div class="border-bottom pb-3 mb-3 text-center p-4" id="contenedorPerfil">
           <h2>Perfil</h2>
+          <img id="fotoPerfil" src="" alt="Foto de perfil" >
         </div>
         <div class="container pt-0">
             <div class="row row-cols-2">
@@ -85,10 +86,15 @@
                 <input type="number" class="form-control" id="inputTelefono" placeholder="Teléfono" required>
                 <div class="invalid-feedback">Debe de ingresar un teléfono de contacto.</div>
               </div>
+              <div class="col mt-3">
+                <label for="inputFoto">Imagen de perfil</label>
+                <input type="file" class="form-control" id="inputFoto" aria-describedby="inputFoto" aria-label="Upload">
+                <!--<button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>-->
+              </div>
             </div>
         </div>
         <div class="container pt-4 border-top pt-3 mt-3">
-          <button class="btn btn-primary col-2" id="save" type="submit">Guardar cambios</button>
+          <button class="btn btn-primary col-3" id="save" type="submit">Guardar cambios</button>
         </div>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           <p class="mb-0">¡Has guardado los cambios con éxito!</p>
