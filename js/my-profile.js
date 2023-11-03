@@ -28,12 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const email = document.getElementById("inputEmail");
     const image = document.getElementById("inputFoto");
     const perfil = document.getElementById("fotoPerfil");
+    const userProfileImage = localStorage.getItem("userProfileImage");
 
     email.value = account;
 
     let user = localStorage.getItem("userInfo");
 
     if (user) {
+        console.log("entro al if");
         let name = document.getElementById("inputNombre");
         let secondName = document.getElementById("inputSegundoNombre");
         let surname = document.getElementById("inputApellido");
@@ -47,13 +49,34 @@ document.addEventListener("DOMContentLoaded", function () {
         surname.value = user.apellido;
         secondSurname.value = user.segundoApellido;
         phone.value = user.telefono;
-
-
     }
 
     if (!image.files.length) {
         perfil.src = "img/fotoperfilanonimo.jpeg";
     }
+
+    if (userProfileImage) {
+        perfil.src = userProfileImage;
+        console.log("entro");
+    }
+
+    image.addEventListener("change", function () {
+        const selectedFile = image.files[0];
+
+        if (selectedFile) {
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const dataURL = event.target.result;
+                localStorage.setItem("userProfileImage", dataURL);
+                perfil.src = dataURL;
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            perfil.src = "img/fotoperfilanonimo.jpeg";
+            localStorage.removeItem("userProfileImage");
+        }
+    });
 });
 
 (function () {
@@ -92,12 +115,11 @@ formProfile.addEventListener("submit", (event) => {
         const surname = document.getElementById("inputApellido");
         const secondSurname = document.getElementById("inputSegundoApellido");
         const phone = document.getElementById("inputTelefono");
-        const image = document.getElementById("inputFoto");
-        
+
         document.querySelector(".alert").style.display = "block";
 
         //prettier-ignore
-        const info = {
+        let info = {
             "nombre": name.value,
             "segundoNombre": secondName.value,
             "apellido": surname.value,
