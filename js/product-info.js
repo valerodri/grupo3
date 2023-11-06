@@ -75,6 +75,7 @@ function agregarCarrito() {
         // Guardar el carrito actualizado en el almacenamiento local
         localStorage.setItem("cart", JSON.stringify(cart));
     
+        document.querySelector(".alert").style.display = "block";
 }
 
 //prettier-ignore
