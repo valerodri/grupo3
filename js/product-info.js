@@ -34,12 +34,6 @@ document.addEventListener("DOMContentLoaded", async function (e) {
 
 //prettier-ignore
 function agregarCarrito() {
-    /* getJSONData(url).then(function (resultObj) {
-        if (resultObj.status === "ok") {
-            product = resultObj.data;
-        }
-         */
-
         // Agregar el producto actual al carrito
         const item = {
             "id": currentProduct.id,
@@ -75,7 +69,13 @@ function agregarCarrito() {
         // Guardar el carrito actualizado en el almacenamiento local
         localStorage.setItem("cart", JSON.stringify(cart));
     
+        //Alerta de producto agregado
         document.querySelector(".alert").style.display = "block";
+
+        //Evento para cerrar alerta de producto agregado
+        document.querySelector(".alert").addEventListener("click", function(){
+            document.querySelector(".alert").style.display = "none";
+        })
 }
 
 //prettier-ignore
