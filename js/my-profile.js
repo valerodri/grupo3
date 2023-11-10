@@ -1,19 +1,20 @@
+//prettier-ignore
 function showAccount() {
     let accountDisplay = document.getElementById("accountDisplay");
     let nameAccount = localStorage.getItem("account");
     let htmlContentToAppend = "";
-    htmlContentToAppend += `<div class="btn-group">
-    <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      ${nameAccount}
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-      <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" id="cerrar_sesion" onclick="cerrarSesion()">Cerrar sesion</a></li>
-    </ul>
-  </div>`;
-
+    htmlContentToAppend += 
+    `<div class="btn-group">
+        <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            ${nameAccount}
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+            <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" id="cerrar_sesion" onclick="cerrarSesion()">Cerrar sesion</a></li>
+        </ul>
+    </div>`;
     accountDisplay.innerHTML = htmlContentToAppend;
 }
 
@@ -57,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (userProfileImage) {
         perfil.src = userProfileImage;
-        console.log("entro");
     }
 
     image.addEventListener("change", function () {
@@ -82,11 +82,9 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
     "use strict";
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll(".needs-validation");
     const formProfile = document.getElementById("formProfile");
 
-    // Loop over them and prevent submission
     Array.prototype.slice.call(forms).forEach(function (form) {
         form.addEventListener(
             "submit",

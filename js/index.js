@@ -29,38 +29,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-//nuevo
+//Funcion que muestra el usuario en la nav-bar
+//prettier-ignore
 function showAccount() {
     let accountDisplay = document.getElementById("accountDisplay");
     let nameAccount = localStorage.getItem("account");
     let htmlContentToAppend = "";
-    htmlContentToAppend += `<div class="btn-group">
-    <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      ${nameAccount}
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
-      <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-      <li><a class="dropdown-item" onclick="cambiarModo()">Cambiar modo</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" id="cerrar_sesion" onclick="cerrarSesion()">Cerrar sesion</a></li>
-    </ul>
-  </div>`;
-
+    htmlContentToAppend += 
+    `<div class="btn-group">
+        <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            ${nameAccount}
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+            <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+            <li><a class="dropdown-item" onclick="cambiarModo()">Cambiar modo</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" id="cerrar_sesion" onclick="cerrarSesion()">Cerrar sesion</a></li>
+        </ul>
+    </div>`;
     accountDisplay.innerHTML = htmlContentToAppend;
 }
 
-/* DARK MODE
-dentro de showAccount:
-<li><a class="dropdown-item" onclick="cambiarModo()">Cambiar modo</a></li>
-
-fuera:
-*/
+//Cambiar a modo oscuro / claro
 function cambiarModo() {
     var element = document.body;
     element.dataset.bsTheme =
         element.dataset.bsTheme == "light" ? "dark" : "light";
-    console.log("it works");
 }
 
 function cerrarSesion() {

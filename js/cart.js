@@ -37,13 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
         currentCartArray = cart.articles;
         showCart();
     }
-    /*getJSONData(url).then(function (resultObj) {
-        console.log(resultObj.status);
-        if (resultObj.status === "ok") {
-            currentCartArray = resultObj.data.articles;
-            showCart();
-        }
-    });*/
 
     document.querySelector(".btn-close").addEventListener("click", () => {
         document.querySelector(".alert").style.display = "none";
