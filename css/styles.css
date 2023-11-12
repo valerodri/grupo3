@@ -216,6 +216,11 @@ a.custom-card:hover {
   margin-right: 5%;
 }
 
+#fotoPerfil {
+  height: 50%;
+  width: auto;
+}
+
 @media (max-device-width: 500px) {
   .footer .container {
     flex-direction: column;
@@ -296,11 +301,6 @@ table {
   margin-right: auto;
 }
 
-#fotoPerfil {
-  height: 20vh;
-  width: auto;
-}
-
 #formProfile.row-cols-2 {
 font-size: x-small;
 }
@@ -323,7 +323,7 @@ img{
   }
 
 #fotoPerfil {
-    height: 35vh;
+    height: 20vh;
     width: auto;
 }
 

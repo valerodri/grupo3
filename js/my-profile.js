@@ -77,6 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.removeItem("userProfileImage");
         }
     });
+
+    document.querySelector(".btn-close").addEventListener("click", () => {
+        document.querySelector(".alert").style.display = "none";
+    });
 });
 
 (function () {
