@@ -313,7 +313,7 @@ font-size: x-small;
   background: url('../img/index_movil.png');
   width: 100%;
   height: 35vh;
-  max-height: 290px;
+  max-height: 250px;
   background-size: cover;
   background-position: justify;}
   
@@ -326,10 +326,9 @@ img{
     height: 20vh;
     width: auto;
 }
-
 }
 
-  /* cart*/
+
 
 .invalidFeedback {
     color: #dc3545;

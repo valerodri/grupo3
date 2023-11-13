@@ -13,55 +13,53 @@
 </head>
 
 <body>
-  <div class="container">
 
-    <div class="row">
-        <div class="text-center p-3" >
-            <img  src="./img/login.png" >
-            <h1>Inicio de sesión</h1>
-        </div>
-    </div>
-
-    <div class="form-floating">
-        <form id="login-form">
+	<div class="container">
         <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <input type="email" class="form-control" id="floatingInput" placeholder=Mail required>
-                <label for="floatingInput"></label>
-            </div> 
-            <div class="col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña" required>
-                <label for="floatingPassword"></label>
+            <div class="text-center p-3">
+                <img src="./img/login.png">
+                <h1>Inicio de sesión</h1>
             </div>
-            <div class="col-md-4"></div>
         </div>
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <div class="checkbox mb-4">
-                <label>
-                    <input type="checkbox" value="remember-me"> Recordar mis datos
-                </label>
-            </div> 
-            <div class="col-md-4"></div>
+        <div class="form-floating">
+            <form id="login-form">
+                <!-- Email Input -->
+                <div class="row">
+                    <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="Mail" required>
+                        <label for="floatingInput"></label>
+                    </div>
+                </div>
+    
+                <!-- Password Input -->
+                <div class="row">
+                    <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña" required>
+                        <label for="floatingPassword"></label>
+                    </div>
+                </div>
+    
+                <!-- Remember Me Checkbox -->
+                <div class="row">
+                    <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+                        <div class="checkbox mb-4">
+                            <label>
+                                <input type="checkbox" value="remember-me"> Recordar mis datos
+                            </label>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Login Button -->
+                <div class="row">
+                    <div class="text-center">
+                        <button onclick="ingresar()" class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+                        <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="row">
-
-            <div class="col-md-12 text-center">
-                <button onclick="ingresar()" class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
-                <p class="mt-5 mb-3 text-muted text-center">&copy; 2017–2021</p>
-            </div> 
-
-        </div>
-        </form>
     </div>
-
-</div> 
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

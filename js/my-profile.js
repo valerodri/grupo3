@@ -1,4 +1,20 @@
 //prettier-ignore
+document.addEventListener("DOMContentLoaded", function () {
+    // Verificar si el usuario tiene un token almacenado
+    var token = localStorage.getItem("token");
+
+    if (!token) {
+        // Si no hay un token, redirigir al usuario a la página de inicio de sesión
+        window.location.href = "login.html";
+    } else {
+        // El usuario tiene un token válido, puedes continuar con el contenido de la página index.html
+        // Por ejemplo, mostrar un mensaje de bienvenida
+        const welcomeMessage = document.createElement("p");
+        welcomeMessage.textContent = "¡Bienvenido!";
+        document.body.appendChild(welcomeMessage);
+    }
+});
+
 function showAccount() {
     let accountDisplay = document.getElementById("accountDisplay");
     let nameAccount = localStorage.getItem("account");
@@ -36,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let user = localStorage.getItem("userInfo");
 
     if (user) {
-        console.log("entro al if");
         let name = document.getElementById("inputNombre");
         let secondName = document.getElementById("inputSegundoNombre");
         let surname = document.getElementById("inputApellido");
