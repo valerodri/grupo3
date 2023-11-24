@@ -1,4 +1,5 @@
 //prettier-ignore
+
 document.addEventListener("DOMContentLoaded", function () {
     // Verificar si el usuario tiene un token almacenado
     var token = localStorage.getItem("token");
