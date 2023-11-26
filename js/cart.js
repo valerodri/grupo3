@@ -110,6 +110,9 @@ function actualizarCarrito(product) {
 
         // Guardar el carrito actualizado en el almacenamiento local
         localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Enviar actualizacion del carrito al backend
+        actualizarCarritoEnBackend(localStorage.getItem("account"), JSON.stringify(cart));
     }
 }
 
@@ -125,12 +128,17 @@ podamos eliminar el elemento en el localStorage que se encuentre en esa posició
 function deleteCart(pos) {
     if (pos >= 0 && pos < currentCartArray.length) {
         currentCartArray.splice(pos, 1);
+        let carrito =  JSON.stringify({ articles: currentCartArray });
         localStorage.setItem(
             "cart",
-            JSON.stringify({ articles: currentCartArray })
+            carrito
         );
+        // Enviar actualizacion del carrito al backend
+        actualizarCarritoEnBackend(localStorage.getItem("account"), carrito);
         showCart();
     }
+
+    
 }
 
 function updateTotalSubtotal() {
@@ -173,8 +181,28 @@ function actualizarCostoEnvio() {
     absTotalElement.textContent = `${absTotal.toFixed(2)}`;
 }
 
-// Agrega un evento de cambio para cada radio button
+// Enviar actualizacion del carrito al backend
+async function actualizarCarritoEnBackend(account, carrito) {
 
+    let token = localStorage.getItem("token");
+    // Realiza una solicitud POST al endpoint /login
+    const response = await fetch("http://localhost:3000/cart", {
+        method: "PUT",
+        headers: {
+            Authorization: `${token}`, // Enviar el token en el encabezado Authorization
+            "Content-Type": "application/json", // Especificar el tipo de contenido si es necesario
+          },
+        body: JSON.stringify({ username: account, cart: carrito }),
+      });
+  
+      const data = await response.json();
+
+      if (response.status != 200) {
+        console.log('Error al actualizar el carrito en la base de datos')
+      }
+}
+
+// Agrega un evento de cambio para cada radio button
 shipValues.forEach((radio) => {
     radio.addEventListener("change", function () {
         selectedShip = radio.value;

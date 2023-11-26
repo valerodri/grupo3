@@ -1,81 +1,54 @@
-const express = require("express"); // Importa ExpressJS. Más info de Express en =>https://expressjs.com/es/starter/hello-world.html
+const express = require("express"); // Importa ExpressJS
 const cors = require("cors");
-const path = require("path");
-const fs = require("fs");
-/*
+const jwt = require("jsonwebtoken");
 const mariadb = require('mariadb'); // Importa MariaDB
-const pool = mariadb.createPool({host: "localhost", user: "root", password: "Pasita.07", database: "pruebadb", connectionLimit: 5});
-*/
-
-//const app2 = await NestFactory.create(AppModule);
-//app.enableCors();
-//await app.listen(3000);
-
-//const app2 = await NestFactory.create(AppModule, { cors: true });
-//await app.listen(3000);
 
 
+const pool = mariadb.createPool({host: "localhost", user: "root", password: "Pasita.07", database: "ecommerce", connectionLimit: 5});
 const app = express(); // Crea una instancia de ExpressJS
-
 const port = 3000;
 
-let datos = require('./emercado-api-main/cart/buy.json')
 app.use(cors());
 app.use(express.static('./emercado-api-main'));
-/*
-const people = require("./json/people.json"); // Importa los datos iniciales (generados en https://www.mockaroo.com/)
-
 app.use(express.json()); // Permite que el servidor analice el cuerpo de las peticiones como JSON
 
-*/
+const secretKey = "tu_clave_secreta_4y293dfdswc3r29jdc92hc23y4d9y2"; // Reemplaza con una clave segura en un entorno de producción
 
 // Esta línea inicia el servidor para que escuche peticiones en el puerto indicado
 app.listen(port, () => {
+  crearUsuarios();
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
 
-
-
+// Solicitud GET
 app.get('/', (req, res) => {
-  // El primer parámetro SIEMPRE es asociado a la request (petición) y el segundo a la response (respuesta)
   res.send("<h1>Bienvenid@ al servidor</h1>");
 });
 
 
-/*
-/////////////////////////////// FUNCION GET
-app.get("./emercado-api-main/people", async (req, res) => { 
+// Solicitud POST
+app.post("/login", async (req, res) => {
 
-  let conn;
-
-  try {
-	  conn = await pool.getConnection();
-	  const rows = await conn.query(
-      "SELECT id, name, lastname, email FROM people"
-  );
-
-    res.json(rows);
-  } catch(error) {
-    res.status(500).json({message:"se rompio el servidor"});
-  }  finally {
-	  if (conn) conn.release(); //release to pool
-  }
-
-});
-
-/*
-/////////////////////////////// FUNCION GET CON PARAMETRO
-app.get("/people/:id", async (req, res) => {
-
-  let conn;
+ const { username, password } = req.body;
+ let conn;
 
   try {
 	  conn = await pool.getConnection();
-	  const rows = await conn.query(
-      "SELECT id, name, lastname, email FROM people WHERE id=?",[req.params.id]
-  );
+	  const response = await conn.query(
+      'SELECT password FROM users WHERE username = ? AND password = ?',
+      [username, password]
+    );
 
-    res.json(rows[0]);
+    if (response.length > 0) {
+      // Si la autenticación es exitosa, generamos un token
+      const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" }); // Puedes ajustar el tiempo de expiración según tus necesidades
+      // Devolvemos el token como respuesta al frontend
+      res.json({ token });
+    } else {
+      // Si la autenticación falla, respondemos con un código de estado 401 (no autorizado)
+      res.status(401).json({ mensaje: "Autenticación fallida" });
+
+    }
   } catch(error) {
     res.status(500).json({message:"se rompio el servidor"});
   }  finally {
@@ -83,62 +56,113 @@ app.get("/people/:id", async (req, res) => {
   }
 });
 
-/////////////////////////////// FUNCION POST
-app.post("/people", async (req, res) => {
+
+// Actualizar carrito en base de datos
+app.put("/cart", checkToken, async (req, res) => {
+
+  const { username, cart } = req.body;
+ 
+  let conn;
+
+  try {
+	  conn = await pool.getConnection();
+	  const response = await conn.query(
+      'REPLACE INTO carts (username, cart) VALUES (?, ?)',
+      [username, cart]
+  );
+
+  } catch(error) {
+    res.status(500).json({message:"se rompio el servidor"});
+  }  finally {
+	  if (conn) conn.release(); //release to pool
+  }
+  
+  res.json("exito put cart!");
+ 
+ });
+
+
+ // Obtener carrito de la base de datos y devolverlo
+app.get("/cart", checkToken, async (req, res) => {
+
+  const username = req.query.username;
 
   let conn;
 
   try {
 	  conn = await pool.getConnection();
 	  const response = await conn.query(
-      'INSERT INTO people(name, lastname, email) VALUE(?,?,?)',[req.body.name, req.body.lastname, req.body.email]
+      'SELECT cart FROM carts WHERE username = ?',
+      [username]
   );
 
-    res.json({id: parseInt(response.insertId), ...req.body});
+  if (response.length > 0) {
+  
+    let carrito = response;
+
+    if (carrito[0]) {
+      res.send(carrito[0]);
+    } else {
+      res.send("{}");
+    }
+  } else {
+    res.send("{}");
+  }
+
   } catch(error) {
     res.status(500).json({message:"se rompio el servidor"});
-  }  finally {
+  } finally {
 	  if (conn) conn.release(); //release to pool
   }
-});
+ });
 
-/////////////////////////////// FUNCION PUT
-app.put("/people/:id", async(req, res) => {
-
+ // Precarga de usuarios
+ async function crearUsuarios() {
+  
   let conn;
 
   try {
 	  conn = await pool.getConnection();
-	  const response = await conn.query(
-      'UPDATE people SET name=?, lastname=?, email=? WHERE id=?',
-      [req.body.name, req.body.lastname, req.body.email, req.params.id]
-  );
+	  await conn.query(
+      'REPLACE INTO users (username, password) VALUES ("maria@jap.com", "maria1")');
+    await conn.query(
+      'REPLACE INTO users (username, password) VALUES ("vale@jap.com", "vale1")');
+    await conn.query(
+      'REPLACE INTO users (username, password) VALUES ("fran@jap.com", "fran1")');
+    await conn.query(
+      'REPLACE INTO users (username, password) VALUES ("alain@jap.com", "alain1")');
 
-    res.json({ id: req.params.id, ...req.body});
   } catch(error) {
-    res.status(500).json({message:"se rompio el servidor"});
+    console.error("Error al crear usuarios en la base de datos.")
   }  finally {
 	  if (conn) conn.release(); //release to pool
   }
-});
+ }
 
-/////////////////////////////// FUNCION DELETE
-app.delete("/people/:id", async(req, res) => {
+ // Función para verificar el token
+function checkToken(req, res, next) {
 
-  let conn;
+  let token = req.header('Authorization');
 
   try {
-	  conn = await pool.getConnection();
-	  const rows = await conn.query(
-      'DELETE FROM people WHERE id=?',
-      [req.params.id]
-  );
+    if (!token) {
+      res.send("Token vacio");
+    }
+    if (jwt.verify(token, secretKey)) {
 
-    res.json({message:"elemento eliminado correctamente"});
-  } catch(error) {
-    res.status(500).json({message:"se rompio el servidor"});
-  }  finally {
-	  if (conn) conn.release(); //release to pool
+      let decoded_token = jwt.decode(token, secretKey);
+
+      if (decoded_token.username.includes(req.query.username) || decoded_token.username.includes(req.body.username)) {
+        next();
+      } else {
+        res.send("El token no pertenece al usuario consultado");
+      }
+    } else {
+      res.send("Token invalido");
+    }
+  } catch (error) {
+    console.error("Error al verificar el token:", error);
+    return null;
   }
-});
-*/
+}
+

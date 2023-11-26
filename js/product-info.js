@@ -68,6 +68,9 @@ function agregarCarrito() {
 
         // Guardar el carrito actualizado en el almacenamiento local
         localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Enviar actualizacion del carrito al backend
+        actualizarCarritoEnBackend(localStorage.getItem("account"), JSON.stringify(cart));
     
         //Alerta de producto agregado
         document.querySelector(".alert").style.display = "block";
@@ -348,6 +351,27 @@ function showAccount() {
 function cerrarSesion() {
     localStorage.clear();
     window.location.href = "login.html";
+}
+
+// Enviar actualizacion del carrito al backend
+async function actualizarCarritoEnBackend(account, carrito) {
+
+    let token = localStorage.getItem("token");
+    // Realiza una solicitud POST al endpoint /login
+    const response = await fetch("http://localhost:3000/cart", {
+        method: "PUT",
+        headers: {
+            Authorization: `${token}`, // Enviar el token en el encabezado Authorization
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({ username: account, cart: carrito }),
+      });
+  
+      const data = await response.json();
+
+      if (response.status != 200) {
+        console.log('Error al actualizar el carrito en la base de datos')
+      }
 }
 
 document.addEventListener("DOMContentLoaded", showAccount());
